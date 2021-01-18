@@ -1,0 +1,106 @@
+@font-face {
+  font-family: "nevis Bold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("https://cdn.glitch.com/fda6f707-e98d-43dc-bf2a-b42cb1acc2c3%2Fnevis.woff?v=1574552202182");
+}
+
+:root {
+  --text: #E0E0E0;
+  --backgr: #0A0A0A;
+  --link: #00ADFF;
+  --button: rgb(255, 145, 0);
+  --button-hover: rgb(187, 107, 1);
+
+  --discord-purple: #7289DA;
+  --discord-purple-darker: #5F72B3;
+  --discord-gray: #99AAB5;
+  --discord-gray-darker: #455A64;
+  --main: #2C2F33;
+  --main-dark: #23272A;
+  --main-darker: #202225;
+  --main-black: #1C1F21;
+  --main-blacker: #151515;
+}
+
+#SAND {
+  background-color: rgb(210, 180, 140);
+}
+#WALL {
+  background-color: rgb(118, 118, 118);
+}
+#WATER {
+  background-color: rgb(52, 152, 219);
+}
+#SPRING {
+  background-image: linear-gradient(
+    to right,
+    rgb(52, 152, 219),
+    rgb(128, 128, 128),
+    rgb(52, 152, 219)
+  );
+}
+#LIFE {
+  background-color: rgb(46, 204, 113);
+}
+#FIRE {
+  background-color: rgb(231, 76, 60);
+}
+#LAVA {
+  background-image: linear-gradient(
+    to right,
+    rgb(231, 76, 60),
+    rgb(230, 126, 34),
+    rgb(231, 76, 60)
+  );
+}
+#OIL {
+  background-color: rgb(139, 97, 42);
+}
+#OIL_WELL {
+  background-image: linear-gradient(
+    to right,
+    rgb(139, 97, 42),
+    rgb(128, 128, 128),
+    rgb(139, 97, 42)
+  );
+}
+#GASOLINE {
+  background-color: rgb(236, 240, 241);
+  color: Black;
+}
+#GAS_PUMP {
+  background-image: linear-gradient(
+    to right,
+    rgb(236, 240, 241),
+    rgb(128, 128, 128),
+    rgb(236, 240, 241)
+  );
+  color: Black;
+}
+#DARK_MATTER {
+  background-color: rgb(30, 30, 30);
+}
+#CONCRETE {
+  background-color: rgb(140, 140, 140);
+}
+#VOLCANO {
+  background-image: linear-gradient(
+    to right,
+    rgb(231, 76, 60),
+    rgb(230, 126, 34),
+    rgb(118, 118, 118),
+    rgb(230, 126, 34),
+    rgb(231, 76, 60)
+  );
+}
+#SALT {
+  background-color: rgb(205, 215, 206);
+  color: black;
+}
+#SALT_WATER {
+  background-color: rgb(52, 91, 219);
+}
+#WOOD {
+  background-color: rgb(60, 36, 5);
+}
