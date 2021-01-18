@@ -3,7 +3,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <!--$-->
     <meta name="og:title" content="Sand Drawings" />
     <meta
       name="og:image"
@@ -12,7 +11,6 @@
     <meta name="og:description" content="Draw with sand!" />
     <meta name="og:site_name" content="sand-drawings" />
     <meta name="keywords" content="sand-drawings" />
-    <!--$-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sandbox</title>
@@ -22,13 +20,11 @@
     />
 
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-    <!--$-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script
       id="lzutf8"
       src="https://cdn.jsdelivr.net/npm/lzutf8/build/production/lzutf8.min.js"
     ></script>
-    <!--$-->
 
     <link rel="stylesheet" href="./css/color.css" />
     <link rel="stylesheet" href="./css/style.css" />
@@ -36,9 +32,7 @@
 
   <body>
     <div class="box" float-left>
-      <canvas width="500" height="500" id="game">
-        Your browser does not support canvas :(
-      </canvas>
+      <canvas width="500" height="500" id="game"> Your browser does not support canvas :( </canvas>
     </div>
     <div id="cursor"></div>
 
@@ -68,53 +62,19 @@
           </td>
 
           <td>
-            <button
-              class="element-button"
-              onclick="tool(CONCRETE);"
-              id="CONCRETE"
-            >
-              Concrete
-            </button>
+            <button class="element-button" onclick="tool(CONCRETE);" id="CONCRETE">Concrete</button>
           </td>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(LIFE);"
-              id="LIFE"
-              title=""
-            >
-              Life
-            </button>
+            <button class="element-button" onclick="tool(LIFE);" id="LIFE" title="">Life</button>
           </td>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(SALT);"
-              id="SALT"
-              title=""
-            >
-              Salt
-            </button>
+            <button class="element-button" onclick="tool(SALT);" id="SALT" title="">Salt</button>
           </td>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(WOOD);"
-              id="WOOD"
-              title=""
-            >
-              Wood
-            </button>
+            <button class="element-button" onclick="tool(WOOD);" id="WOOD" title="">Wood</button>
           </td>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(WALL);"
-              id="WALL"
-              title=""
-            >
-              Wall
-            </button>
+            <button class="element-button" onclick="tool(WALL);" id="WALL" title="">Wall</button>
           </td>
         </tr>
       </table>
@@ -124,42 +84,22 @@
       <table>
         <tr>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(SPRING);"
-              id="SPRING"
-              title=""
-            >
+            <button class="element-button" onclick="tool(SPRING);" id="SPRING" title="">
               Spring
             </button>
           </td>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(OIL_WELL);"
-              id="OIL_WELL"
-              title=""
-            >
+            <button class="element-button" onclick="tool(OIL_WELL);" id="OIL_WELL" title="">
               Oil Well
             </button>
           </td>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(GAS_PUMP);"
-              id="GAS_PUMP"
-              title=""
-            >
+            <button class="element-button" onclick="tool(GAS_PUMP);" id="GAS_PUMP" title="">
               Gas Pump
             </button>
           </td>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(VOLCANO);"
-              id="VOLCANO"
-              title=""
-            >
+            <button class="element-button" onclick="tool(VOLCANO);" id="VOLCANO" title="">
               Volcano
             </button>
           </td>
@@ -171,53 +111,31 @@
       <table>
         <tr>
           <td>
-            <button class="element-button" onclick="tool(WATER);" id="WATER">
-              Water
-            </button>
+            <button class="element-button" onclick="tool(WATER);" id="WATER">Water</button>
           </td>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(SALT_WATER);"
-              id="SALT_WATER"
-            >
+            <button class="element-button" onclick="tool(SALT_WATER);" id="SALT_WATER">
               Salt Water
             </button>
           </td>
 
           <td>
-            <button class="element-button" onclick="tool(FIRE);" id="FIRE">
-              Fire
-            </button>
+            <button class="element-button" onclick="tool(FIRE);" id="FIRE">Fire</button>
           </td>
           <td>
-            <button class="element-button" onclick="tool(OIL);" id="OIL">
-              Oil
-            </button>
+            <button class="element-button" onclick="tool(OIL);" id="OIL">Oil</button>
           </td>
 
           <td>
-            <button
-              class="element-button"
-              onclick="tool(GASOLINE);"
-              id="GASOLINE"
-            >
-              Gasoline
-            </button>
+            <button class="element-button" onclick="tool(GASOLINE);" id="GASOLINE">Gasoline</button>
           </td>
           <td>
-            <button
-              class="element-button"
-              onclick="tool(DARK_MATTER);"
-              id="DARK_MATTER"
-            >
+            <button class="element-button" onclick="tool(DARK_MATTER);" id="DARK_MATTER">
               Dark Matter
             </button>
           </td>
           <td>
-            <button class="element-button" onclick="tool(LAVA);" id="LAVA">
-              Lava
-            </button>
+            <button class="element-button" onclick="tool(LAVA);" id="LAVA">Lava</button>
           </td>
         </tr>
       </table>
@@ -243,9 +161,7 @@
         <!--$-->
         <button onclick="exp()">Export</button>
         <button onclick="imp()">Import</button>
-        <button onclick="connect()">
-          Connect
-        </button>
+        <button onclick="connect()">Connect</button>
         <!--$-->
         <button
           onclick="window.location.href='https://discordapp.com/oauth2/authorize?client_id=705470771287293963&redirect_uri=https%3A%2F%2Fsand-drawings.glitch.me%2Fdiscord-auth&response_type=token&scope=identify%20gdm.join'"
@@ -261,9 +177,7 @@
     <!--$-->
     <img id="otherCanvas" />
     <div id="chat">
-      <div id="messages-title" noselect>
-        Chat
-      </div>
+      <div id="messages-title" noselect>Chat</div>
       <div id="messages-collapse"></div>
       <div id="messages-collapse-top"></div>
       <div id="messages">
@@ -272,7 +186,7 @@
       </div>
     </div>
 
-    <div id="global-chat" style="display: none;">
+    <div id="global-chat" style="display: none">
       <div id="global-title">Global Chat</div>
       <div id="global-chat-box">
         <div id="global-msgs"></div>
@@ -282,32 +196,20 @@
     <!--$-->
     <footer>
       <!--$-->
-      <div
-        id="global-preview"
-        onclick="showGlobal()"
-        style="position: absolute;"
-      >
+      <div id="global-preview" onclick="showGlobal()" style="position: absolute">
         Click to open the global chat!
       </div>
       <!--$-->
 
       <span>
         Inspired by
-        <a
-          href="https://github.com/Kledal/html5-sand-game"
-          style="color: inherit;"
-          >Kledal</a
-        >
+        <a href="https://github.com/Kledal/html5-sand-game" style="color: inherit">Kledal</a>
       </span>
 
-      <div id="hotkeys" onclick="showHotkeys()" style="float: right">
-        [F1]
-      </div>
+      <div id="hotkeys" onclick="showHotkeys()" style="float: right">[F1]</div>
     </footer>
 
-    <div id="tooltip">
-      Tooltip
-    </div>
+    <div id="tooltip">Tooltip</div>
 
     <script src="./js/game.js"></script>
     <script src="./js/draw2d.js"></script>
@@ -323,8 +225,7 @@
       let mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(
         navigator.userAgent
       );
-      if (mobile)
-        alert("This game has semi-support for mobile. Proceed with caution.");
+      if (mobile) alert("This game has semi-support for mobile. Proceed with caution.");
 
       var test = new Game();
       //$//
@@ -335,13 +236,12 @@
       var connectedData = { name: "Unknown" };
       //$//
 
-      var tool = t => {
+      var tool = (t) => {
         test.mouse.tool = t;
       };
 
       var emitMessage = (content, name) => {
-        document.getElementById("msgs").innerHTML +=
-          "<b>" + name + ":</b> " + content + "<br>";
+        document.getElementById("msgs").innerHTML += "<b>" + name + ":</b> " + content + "<br>";
         document.getElementById("msgs").scrollTop = 9999;
       };
       //$//
@@ -350,7 +250,7 @@
           "<b>" + name + ":</b> " + content + "<br>";
         document.getElementById("global-msgs").scrollTop = 9999;
       };
-      var connect = id => {
+      var connect = (id) => {
         id = id || prompt("Enter the ID of the user to connect to.");
         socket.emit("connecc", { to: id, name: msgAuthor, from: test.id });
         console.log("Request sent to " + id);
@@ -358,31 +258,24 @@
       };
 
       var exp = () => {
-        let URLID = String(
-          Math.random()
-            .toFixed(7)
-            .split(".")[1]
-        );
+        let URLID = String(Math.random().toFixed(7).split(".")[1]);
         let URL = "https://sand-drawings.glitch.me/board/" + URLID;
         socket.emit("export", { toExport: test.grid, id: URLID });
         emitMessage(
-          'Your export data can be found at <a href="' +
-            URL +
-            '">this link<a>.',
+          'Your export data can be found at <a href="' + URL + '">this link<a>.',
           "System"
         );
       };
       var imp = () => {
         let URL = prompt("Enter the export URL or code you were given.");
-        if (!URL.includes("https://"))
-          URL = "https://sand-drawings.glitch.me/board/" + URL;
+        if (!URL.includes("https://")) URL = "https://sand-drawings.glitch.me/board/" + URL;
         fetch(URL)
-          .then(res => res.text())
-          .then(d => {
+          .then((res) => res.text())
+          .then((d) => {
             if (!d.startsWith("[")) {
               test.grid = JSON.parse(
                 LZUTF8.decompress(d, {
-                  inputEncoding: "StorageBinaryString"
+                  inputEncoding: "StorageBinaryString",
                 })
               );
             } else {
@@ -395,56 +288,46 @@
         let disp = document.getElementById("global-chat").style.display;
         if (disp == "none") {
           document.getElementById("global-chat").style.display = "block";
-          if (msgAuthor == "Unknown")
-            msgAuthor = prompt("Chat Username?") || "Unknown";
+          if (msgAuthor == "Unknown") msgAuthor = prompt("Chat Username?") || "Unknown";
           document.getElementById("global-send").select();
         } else {
           document.getElementById("global-chat").style.display = "none";
         }
       };
 
-      socket.on("incomingMessage", message => {
+      socket.on("incomingMessage", (message) => {
         if (message.global) {
           document.getElementById("global-preview").innerHTML = message.content;
           emitGlobalMessage(message.content, message.author.name);
-        } else if (
-          message.author.id == test.id ||
-          message.author.id == connected
-        ) {
+        } else if (message.author.id == test.id || message.author.id == connected) {
           emitMessage(message.content, message.author.name);
         }
       });
-      socket.on("incomingCanvas", c => {
+      socket.on("incomingCanvas", (c) => {
         if (c.to == test.id) {
           document.getElementById("otherCanvas").src = c.img;
         }
       });
-      setInterval(function() {
+      setInterval(function () {
         socket.emit("canvas", {
           img: test.canvas.toDataURL("image/png"),
           id: test.id,
-          to: connected || "0"
+          to: connected || "0",
         });
       }, 100);
-      socket.on("accepted", d => {
+      socket.on("accepted", (d) => {
         if (d.to == test.id) {
-          if (d.deny)
-            return emitMessage(d.name + " denied your invite.", "System");
-          emitMessage(
-            "User " + d.name + " has accepted your game invite!",
-            "System"
-          );
+          if (d.deny) return emitMessage(d.name + " denied your invite.", "System");
+          emitMessage("User " + d.name + " has accepted your game invite!", "System");
           connected = d.id;
-          document.getElementById("send").placeholder =
-            "Send a Message to " + d.name;
+          document.getElementById("send").placeholder = "Send a Message to " + d.name;
         } else if (d.id == test.id && !d.deny) {
           emitMessage("Accepted!", "System");
           connected = d.to;
-          document.getElementById("send").placeholder =
-            "Send a Message to " + d.fromName;
+          document.getElementById("send").placeholder = "Send a Message to " + d.fromName;
         }
       });
-      socket.on("request", d => {
+      socket.on("request", (d) => {
         console.log("Request");
         if (d.to !== test.id) return;
         emitMessage(
@@ -453,13 +336,13 @@
             '\'s invite?</a> <a href="javascript:accept(false)">Decline?</a>',
           "System"
         );
-        accept = decl => {
+        accept = (decl) => {
           if (decl) {
             socket.emit("accept", {
               id: test.id,
               to: d.from,
               name: msgAuthor,
-              fromName: d.name
+              fromName: d.name,
             });
           } else {
             socket.emit("accept", {
@@ -467,7 +350,7 @@
               to: d.from,
               name: msgAuthor,
               fromName: d.name,
-              deny: true
+              deny: true,
             });
           }
         };
@@ -477,18 +360,14 @@
       //$//
       document.getElementById("join").href += test.id;
 
-      document.getElementById("send").addEventListener("click", function(e) {
-        if (msgAuthor == "Unknown")
-          msgAuthor = prompt("Chat Username?") || "Unknown";
+      document.getElementById("send").addEventListener("click", function (e) {
+        if (msgAuthor == "Unknown") msgAuthor = prompt("Chat Username?") || "Unknown";
       });
-      document
-        .getElementById("global-send")
-        .addEventListener("click", function(e) {
-          if (msgAuthor == "Unknown")
-            msgAuthor = prompt("Chat Username?") || "Unknown";
-        });
+      document.getElementById("global-send").addEventListener("click", function (e) {
+        if (msgAuthor == "Unknown") msgAuthor = prompt("Chat Username?") || "Unknown";
+      });
 
-      document.getElementById("send").addEventListener("keyup", function(e) {
+      document.getElementById("send").addEventListener("keyup", function (e) {
         if (e.key !== "Enter") return;
         let v = document.getElementById("send").value.replace(/\n/g, "");
         if (!v) return;
@@ -496,33 +375,28 @@
         socket.emit("message", {
           author: { id: test.id, name: msgAuthor },
           content: v,
-          to: connected || "0"
+          to: connected || "0",
         });
       });
-      document
-        .getElementById("global-send")
-        .addEventListener("keyup", function(e) {
-          if (e.key !== "Enter") return;
-          let v = document
-            .getElementById("global-send")
-            .value.replace(/\n/g, "");
-          if (!v) return;
-          document.getElementById("global-send").value = "";
-          socket.emit("message", {
-            author: { id: test.id, name: msgAuthor },
-            content: v,
-            global: true
-          });
+      document.getElementById("global-send").addEventListener("keyup", function (e) {
+        if (e.key !== "Enter") return;
+        let v = document.getElementById("global-send").value.replace(/\n/g, "");
+        if (!v) return;
+        document.getElementById("global-send").value = "";
+        socket.emit("message", {
+          author: { id: test.id, name: msgAuthor },
+          content: v,
+          global: true,
         });
+      });
 
-      if (window.location.href.split("#")[1])
-        connect(window.location.href.split("#")[1]);
+      if (window.location.href.split("#")[1]) connect(window.location.href.split("#")[1]);
 
       let kong = window.location.href.includes("kongregate_username=");
 
       //$//
 
-      document.addEventListener("keyup", function(e) {
+      document.addEventListener("keyup", function (e) {
         if (e.key == "Tab") {
           let g = document.getElementById("game");
           if (g.style.cursor == "none") {

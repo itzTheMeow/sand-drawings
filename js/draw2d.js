@@ -7,7 +7,7 @@ function Draw2D(context, width, height) {
   this.pixData = this.imgData.data;
 }
 
-Draw2D.prototype.clear = function() {
+Draw2D.prototype.clear = function () {
   //this.context.clearRect(0, 0, 300, 300);
   var i = 0;
   for (i; i < this.imgData.data.length; i++) {
@@ -15,7 +15,7 @@ Draw2D.prototype.clear = function() {
   }
 };
 
-Draw2D.prototype.fill = function(mat) {
+Draw2D.prototype.fill = function (mat) {
   var x = 0;
   var y = 0;
   var that = test;
@@ -30,16 +30,16 @@ Draw2D.prototype.fill = function(mat) {
   }
 };
 
-Draw2D.prototype.text = function(text, x, y, font) {
+Draw2D.prototype.text = function (text, x, y, font) {
   this.context.font = font || "12px Verdana";
   this.context.fillText(text, x, y);
 };
 
-Draw2D.prototype.doneDraw = function() {
+Draw2D.prototype.doneDraw = function () {
   this.context.putImageData(this.imgData, 0, 0);
 };
 
-Draw2D.prototype.pixel = function(x, y, r, g, b) {
+Draw2D.prototype.pixel = function (x, y, r, g, b) {
   // this.context.fillStyle = "rgb("+r+","+g+","+b+")";
   // this.context.fillRect(x, y, 1, 1);
 

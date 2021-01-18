@@ -7,36 +7,24 @@ function Mouse(canvas) {
   this.tool = SAND;
   this.canvas = canvas;
 
-  this.canvas.addEventListener(
-    "mousedown",
-    this.handle_mouse_down.bind(this),
-    false
-  );
-  this.canvas.addEventListener(
-    "mouseup",
-    this.handle_mouse_up.bind(this),
-    false
-  );
+  this.canvas.addEventListener("mousedown", this.handle_mouse_down.bind(this), false);
+  this.canvas.addEventListener("mouseup", this.handle_mouse_up.bind(this), false);
 
-  this.canvas.addEventListener(
-    "mousemove",
-    this.handle_mouse_move.bind(this),
-    false
-  );
+  this.canvas.addEventListener("mousemove", this.handle_mouse_move.bind(this), false);
 
   this.canvas.addEventListener(
     "contextmenu",
-    function(e) {
+    function (e) {
       console.log(e);
       e.preventDefault();
     },
     false
   );
 
-  this.canvas.addEventListener("mouseout", function(e) {
+  this.canvas.addEventListener("mouseout", function (e) {
     document.getElementById("cursor").style.display = "none";
   });
-  this.canvas.addEventListener("mouseover", function(e) {
+  this.canvas.addEventListener("mouseover", function (e) {
     document.getElementById("cursor").style.display = "block";
   });
 
@@ -90,21 +78,21 @@ function Mouse(canvas) {
   );*/
 }
 
-Mouse.prototype.handle_mouse_up = function(event) {
+Mouse.prototype.handle_mouse_up = function (event) {
   this.is_down = false;
 };
-Mouse.prototype.handle_mouse_down = function(event) {
+Mouse.prototype.handle_mouse_down = function (event) {
   if (event.button == 0) this.is_down = true;
 };
 
-Mouse.prototype.get_mouse_pos = function(evt) {
+Mouse.prototype.get_mouse_pos = function (evt) {
   var rect = this.canvas.getBoundingClientRect();
   return {
     x: evt.clientX - rect.left,
-    y: evt.clientY - rect.top
+    y: evt.clientY - rect.top,
   };
 };
-Mouse.prototype.get_mouse_loc = function(event) {
+Mouse.prototype.get_mouse_loc = function (event) {
   var pos = this.get_mouse_pos(event);
   let loc = {};
   loc.x = pos.x - Math.floor(test.mouse.size / 2);
@@ -112,7 +100,7 @@ Mouse.prototype.get_mouse_loc = function(event) {
   return loc;
 };
 
-Mouse.prototype.handle_mouse_move = function(event) {
+Mouse.prototype.handle_mouse_move = function (event) {
   var pos = this.get_mouse_pos(event);
   this.x = pos.x - Math.floor(test.mouse.size / 2);
   this.y = pos.y - Math.floor(test.mouse.size / 2);

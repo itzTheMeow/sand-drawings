@@ -5,7 +5,7 @@ function Spawner(type, x, y, random) {
   this.random = random;
 }
 
-Spawner.prototype.add_obj = function(x, y, game) {
+Spawner.prototype.add_obj = function (x, y, game) {
   var color = game.type_color[this.type];
   var obj = {
     x: x,
@@ -15,12 +15,12 @@ Spawner.prototype.add_obj = function(x, y, game) {
     type: this.type,
     r: color.r,
     g: color.g,
-    b: color.b
+    b: color.b,
   };
   game.add_obj(x, y, this.type);
 };
 
-Spawner.prototype.update = function(game) {
+Spawner.prototype.update = function (game) {
   var x = this.base_x;
   var y = this.base_y;
 

@@ -1,5 +1,5 @@
 function initDrags(Game) {
-  (function() {
+  (function () {
     let elmnt = document.getElementById("chat");
     var pos1 = 0,
       pos2 = 0,
@@ -48,7 +48,7 @@ function initDrags(Game) {
     }
   })(); // chat
 
-  (function() {
+  (function () {
     let elmnt = document.getElementById("solids");
     var pos1 = 0,
       pos2 = 0,
@@ -96,8 +96,8 @@ function initDrags(Game) {
       document.onmousemove = null;
     }
   })(); // solids
-  
-  (function() {
+
+  (function () {
     let elmnt = document.getElementById("spawners");
     var pos1 = 0,
       pos2 = 0,
@@ -145,8 +145,8 @@ function initDrags(Game) {
       document.onmousemove = null;
     }
   })(); // spawners
-  
-  (function() {
+
+  (function () {
     let elmnt = document.getElementById("liquids");
     var pos1 = 0,
       pos2 = 0,

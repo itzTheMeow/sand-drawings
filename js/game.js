@@ -70,19 +70,19 @@ function Game() {
       density: 0,
       CSS: { "background-color": "rgb(0, 0, 0)" },
       name: "Space",
-      sound: "#"
+      sound: "#",
     },
     wall: {
       color: [118, 118, 118],
       CSS: { "background-color": "rgb(118, 118, 118)" },
       name: "Wall",
-      sound: "#"
+      sound: "#",
     },
     wood: {
       color: [60, 36, 5],
       CSS: { "background-color": "rgb(60, 36, 5)" },
       name: "Wood",
-      sound: "#"
+      sound: "#",
     },
     sand: {
       color: [210, 180, 140],
@@ -93,21 +93,21 @@ function Game() {
         "#" ||
         new Audio(
           "https://cdn.glitch.com/940018fc-c2fe-427c-a43b-34505af82640%2FItem.SAND.FallingSound.wav?v=1577513079723"
-        )
+        ),
     },
     salt: {
       color: [205, 215, 206],
       CSS: { "background-color": "rgb(205, 215, 206)" },
       density: 15,
       name: "Salt",
-      sound: "#"
+      sound: "#",
     },
     concrete: {
       color: [140, 140, 140],
       CSS: { "background-color": "rgb(140, 140, 140)" },
       density: 15,
       name: "Concrete",
-      sound: "#"
+      sound: "#",
     },
     water: {
       color: [52, 152, 219],
@@ -115,7 +115,7 @@ function Game() {
       liquid: true,
       density: 5,
       name: "Water",
-      sound: "#"
+      sound: "#",
     },
     salt_water: {
       color: [52, 91, 219],
@@ -123,7 +123,7 @@ function Game() {
       liquid: true,
       density: 7,
       name: "Salt Water",
-      sound: "#"
+      sound: "#",
     },
     life: {
       color: [46, 204, 113],
@@ -131,7 +131,7 @@ function Game() {
       bColors: [230, 126, 34, 192, 57, 43],
       infect: true,
       name: "Life",
-      sound: "#"
+      sound: "#",
     },
     fire: {
       color: [231, 76, 60],
@@ -139,7 +139,7 @@ function Game() {
       bColors: [230, 126, 34, 192, 57, 43],
       infect: true,
       name: "Fire",
-      sound: "#"
+      sound: "#",
     },
     burning: {
       color: [230, 126, 34],
@@ -147,7 +147,7 @@ function Game() {
       bColors: [230, 126, 34, 192, 57, 43],
       infect: true,
       name: "Burning",
-      sound: "#"
+      sound: "#",
     },
     oil: {
       color: [139, 97, 42],
@@ -155,7 +155,7 @@ function Game() {
       liquid: true,
       density: 4,
       name: "Oil",
-      sound: "#"
+      sound: "#",
     },
     gasoline: {
       color: [226, 230, 231],
@@ -163,7 +163,7 @@ function Game() {
       liquid: true,
       density: 3,
       name: "Gasoline",
-      sound: "#"
+      sound: "#",
     },
     dark_matter: {
       color: [30, 30, 30],
@@ -171,64 +171,64 @@ function Game() {
       liquid: true,
       density: 1,
       name: "Dark Matter",
-      sound: "#"
+      sound: "#",
     },
     steam: {
       color: [128, 128, 128],
       CSS: { "background-color": "rgb(128, 128, 128)" },
       density: -1,
       name: "Steam",
-      sound: "#"
+      sound: "#",
     },
     hardened_concrete: {
       color: [98, 98, 98],
       CSS: { "background-color": "rgb(98, 98, 98)" },
       name: "Hardened Concrete",
-      sound: "#"
+      sound: "#",
     },
     spring: {
       CSS: {
         "background-image":
-          "linear-gradient(to right, rgb(52, 152, 219), rgb(128, 128, 128), rgb(52, 152, 219))"
+          "linear-gradient(to right, rgb(52, 152, 219), rgb(128, 128, 128), rgb(52, 152, 219))",
       },
       name: "Spring",
-      sound: "#"
+      sound: "#",
     },
     oil_well: {
       CSS: {
         "background-image":
-          "linear-gradient(to right, rgb(139, 97, 42), rgb(128, 128, 128), rgb(139, 97, 42))"
+          "linear-gradient(to right, rgb(139, 97, 42), rgb(128, 128, 128), rgb(139, 97, 42))",
       },
       name: "Oil Well",
-      sound: "#"
+      sound: "#",
     },
     lava: {
       CSS: {},
       name: "Lava",
-      sound: "#"
+      sound: "#",
     },
     gas_pump: {
       CSS: {
         "background-image":
-          "linear-gradient(to right, rgb(236, 240, 241), rgb(128, 128, 128), rgb(236, 240, 241))"
+          "linear-gradient(to right, rgb(236, 240, 241), rgb(128, 128, 128), rgb(236, 240, 241))",
       },
       name: "Gas Pump",
-      sound: "#"
+      sound: "#",
     },
     volcano: {
       CSS: {
         "background-image":
-          "linear-gradient(to right, rgb(231, 76, 60), rgb(230, 126, 34), rgb(118, 118, 118), rgb(230, 126, 34), rgb(231, 76, 60))"
+          "linear-gradient(to right, rgb(231, 76, 60), rgb(230, 126, 34), rgb(118, 118, 118), rgb(230, 126, 34), rgb(231, 76, 60))",
       },
       name: "Volcano",
-      sound: "#"
-    }
+      sound: "#",
+    },
   };
 
   this.init();
 }
 
-Game.prototype.init = function() {
+Game.prototype.init = function () {
   // Load canvas og context;
   this.canvas = document.getElementById("game");
   if (this.canvas.getContext) {
@@ -243,28 +243,28 @@ Game.prototype.init = function() {
     this.fpsStart = new Date();
 
     this.setup();
-    
-    initDrags(Game)
 
-    let upd8 = function() {
+    initDrags(Game);
+
+    let upd8 = function () {
       that.update();
       setTimeout(upd8, that.updateDelay);
     };
     upd8();
 
-    var setupDraw = function() {
+    var setupDraw = function () {
       that.draw();
       window.requestAnimationFrame(setupDraw);
     };
 
     window.requestAnimationFrame(setupDraw);
 
-    document.getElementById("messages-collapse").onclick = function() {
+    document.getElementById("messages-collapse").onclick = function () {
       document.getElementById("messages-collapse-top").style.display = "block";
       document.getElementById("messages").style.display = "none";
       Game.messagesCollapsed = true;
     };
-    document.getElementById("messages-collapse-top").onclick = function() {
+    document.getElementById("messages-collapse-top").onclick = function () {
       document.getElementById("messages-collapse-top").style.display = "none";
       document.getElementById("messages").style.display = "block";
       Game.messagesCollapsed = false;
@@ -277,7 +277,7 @@ Game.prototype.init = function() {
   }
 };
 
-Game.prototype.setup = function() {
+Game.prototype.setup = function () {
   this.grid = new Array(this.gameWidth);
   var x = 0;
   var y = 0;
@@ -292,25 +292,23 @@ Game.prototype.setup = function() {
     x++;
   }
   let _this = this;
-  document.addEventListener("mousemove", function(e) {
+  document.addEventListener("mousemove", function (e) {
     let s = _this.mouse.size;
     let stl = _this.get_material(_this.mouse.tool).CSS || {
-      "background-color": "red"
+      "background-color": "red",
     };
-    Object.keys(stl).forEach(st => {
+    Object.keys(stl).forEach((st) => {
       document.getElementById("cursor").style[st] = stl[st];
     });
     document.getElementById("cursor").style.width = s + "px";
     document.getElementById("cursor").style.height = s + "px";
-    document.getElementById("cursor").style.left =
-      e.clientX - Math.floor(s / 2) + "px";
-    document.getElementById("cursor").style.top =
-      e.clientY - Math.floor(s / 2) + "px";
+    document.getElementById("cursor").style.left = e.clientX - Math.floor(s / 2) + "px";
+    document.getElementById("cursor").style.top = e.clientY - Math.floor(s / 2) + "px";
   });
 };
 
 let un = 0;
-Game.prototype.update = function() {
+Game.prototype.update = function () {
   var game = this;
 
   let playing = true;
@@ -499,10 +497,7 @@ Game.prototype.update = function() {
 
       var um = this.get_material(this.grid[x][y - 1]);
       if (um !== undefined) {
-        if (
-          typeof um.density !== "undefined" &&
-          typeof m.density !== "undefined"
-        ) {
+        if (typeof um.density !== "undefined" && typeof m.density !== "undefined") {
           if (m.density < um.density) {
             if (Math.random() < 0.7) {
               this.swap(x, y - 1, x, y);
@@ -523,7 +518,7 @@ Game.prototype.update = function() {
   }
 };
 
-Game.prototype.infect = function(x, y, react, infect, speed) {
+Game.prototype.infect = function (x, y, react, infect, speed) {
   speed = speed || 0.1;
 
   var coords = [
@@ -534,7 +529,7 @@ Game.prototype.infect = function(x, y, react, infect, speed) {
     [x - 1, y - 1],
     [x - 1, y + 1],
     [x + 1, y - 1],
-    [x + 1, y + 1]
+    [x + 1, y + 1],
   ];
   var i = 0;
   while (i < coords.length) {
@@ -551,10 +546,15 @@ Game.prototype.infect = function(x, y, react, infect, speed) {
   }
 };
 
-Game.prototype.get_infected = function(x, y, search, replace, speed) {
+Game.prototype.get_infected = function (x, y, search, replace, speed) {
   speed = speed || 0.1;
 
-  var coords = [[x, y - 1], [x, y + 1], [x + 1, y], [x - 1, y]];
+  var coords = [
+    [x, y - 1],
+    [x, y + 1],
+    [x + 1, y],
+    [x - 1, y],
+  ];
   var i = 0;
 
   var oldX = x,
@@ -571,7 +571,7 @@ Game.prototype.get_infected = function(x, y, search, replace, speed) {
   }
 };
 
-Game.prototype.draw = function() {
+Game.prototype.draw = function () {
   var game = this;
 
   game.draw2d.doneDraw();
@@ -607,7 +607,7 @@ Game.prototype.draw = function() {
   this.framesSinceLast++;
 };
 
-Game.prototype.fill_square = function(x, y, w, h, s) {
+Game.prototype.fill_square = function (x, y, w, h, s) {
   for (var xx = x; xx < x + w; xx++) {
     for (var yy = y; yy < y + h; yy++) {
       this.add_obj(xx, yy, s);
@@ -615,7 +615,7 @@ Game.prototype.fill_square = function(x, y, w, h, s) {
   }
 };
 
-Game.prototype.handle_mouse = function() {
+Game.prototype.handle_mouse = function () {
   if (this.mouse.is_down) {
     if (this.mouse.tool !== NONE) {
       this.fill_square(
@@ -631,7 +631,7 @@ Game.prototype.handle_mouse = function() {
   }
 };
 
-Game.prototype.get_material = function(s, getName) {
+Game.prototype.get_material = function (s, getName) {
   if (s & WALL && s & WATER && getName) {
     return this.materials.spring;
   }
@@ -703,42 +703,42 @@ Game.prototype.get_material = function(s, getName) {
 
 // Helpers
 
-Game.prototype.clear = function() {
+Game.prototype.clear = function () {
   this.setup();
   //this.particles = 0;
 };
-Game.prototype.fill = function() {
+Game.prototype.fill = function () {
   this.draw2d.fill(this.mouse.tool);
   //this.particles = this.canvas.width * this.canvas.height;
 };
 
-Game.prototype.add_obj = function(x, y, type) {
+Game.prototype.add_obj = function (x, y, type) {
   /*if (this.grid[x] && this.grid[y] && this.grid[x][y] === NONE) {
     this.particles++;
   }*/
   (this.grid[x] || {})[y] = type;
 };
 
-Game.prototype.remove_obj = function(x, y) {
+Game.prototype.remove_obj = function (x, y) {
   /*if (this.grid[x][y] !== NONE) {
     this.particles--;
   }*/
   this.grid[x][y] = NONE;
 };
 
-Game.prototype.swap = function(x, y, oldx, oldy) {
+Game.prototype.swap = function (x, y, oldx, oldy) {
   var temp = this.grid[x][y];
   var temp1 = this.grid[oldx][oldy];
   this.grid[x][y] = temp1;
   this.grid[oldx][oldy] = temp;
 };
 
-Game.prototype.move_obj = function(x, y, oldx, oldy, type) {
+Game.prototype.move_obj = function (x, y, oldx, oldy, type) {
   this.remove_obj(oldx, oldy);
   this.add_obj(x, y, type);
 };
 
-Game.prototype.dot = function(x, y) {
+Game.prototype.dot = function (x, y) {
   if (x < 0 || x > this.gameWidth || y < 0 || y > this.gameHeight) {
     return WALL;
   }
