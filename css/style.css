@@ -45,7 +45,6 @@ footer {
   width: 75px;
   height: 36.5px;
   margin-bottom: 1px;
-  -position: absolute;
 }
 #other {
   float: left;
@@ -252,7 +251,7 @@ td {
   border-radius: 6px;
 }
 #msgs::-webkit-scrollbar-thumb {
-  background: #C1C1C1;
+  background: #c1c1c1;
   border-radius: 6px;
 }
 #msgs::-webkit-scrollbar-thumb:hover {
