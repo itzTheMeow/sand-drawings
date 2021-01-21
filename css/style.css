@@ -16,6 +16,7 @@ button {
   border: 1px solid Black;
   font-family: "nevis Bold";
   position: relative;
+  box-sizing: border-box;
 }
 button:hover {
   background-color: var(--button-hover);
