@@ -49,7 +49,7 @@ function Game() {
   this.framesSinceLast = 0;
   this.fps = 0;
   this.fpsStart;
-  this.term = "";
+  this.term = "Legacy";
   this.ver = "1.4.2";
   this.id = String(Math.random()).split(".")[1];
   this.messagesCollapsed = false;
