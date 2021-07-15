@@ -1,0 +1,1 @@
+export default _ = (i) => document.getElementById(i);
