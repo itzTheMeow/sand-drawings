@@ -1,6 +1,6 @@
 import Renderer from "./Renderer";
 import Pen from "./Pen";
-import { GameCanvas, ctx, getSize } from "GameCanvas";
+import { GameCanvas, ctx, getSize } from "./GameCanvas";
 
 function Game() {
   this.pen = new Pen(this);
