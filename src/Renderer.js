@@ -16,7 +16,7 @@ function Renderer(game) {
         y: Number(p.split(",")[0]),
         mat: game.pixels[p]
       };
-      if(pixel.mat !== 0) {
+      if(pixel.mat != 0) {
         this.renderPixel(pixel.x, pixel.y, pixel.mat);
       }
     })
