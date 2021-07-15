@@ -1,14 +1,16 @@
 import Renderer from "./Renderer";
 import Pen from "./Pen";
-import { GameCanvas, ctx, getSize } from "./GameCanvas";
 
 function Game() {
   this.pen = new Pen(this);
   this.renderer = new Renderer(this);
-  this.canvas = GameCanvas;
-  this.ctx = ctx;
+  this.canvas = _("canvas");
+  this.ctx = this.canvas.getContext("2d");
   
-  this.size = getSize();
+  this.size = {
+    w: (this.canvas.width = window.innerWidth),
+    h: (this.canvas.height = window.innerHeight)
+  };
   this.pixels = {};
   let posX = 0;
   let posY = 0;
