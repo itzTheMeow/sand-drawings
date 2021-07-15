@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/itzTheMeow/sand-drawings#readme",
   "dependencies": {
+    "body-scroll-lock": "^3.1.5",
     "express": "^4.17.1",
     "sass": "^1.35.2",
     "webpack": "^5.44.0",

@@ -1,5 +1,8 @@
 import config from "./config";
 import { GameCanvas, ctx, getSize } from "./GameCanvas";
+import { disableBodyScroll } from "body-scroll-lock";
+
+disableBodyScroll();
 
 let size = getSize();
 ctx.fillStyle = config.background;
