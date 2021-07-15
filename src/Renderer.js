@@ -1,4 +1,5 @@
 import { getMaterial } from "./Materials";
+import config from "./config"
 
 function Renderer(game) {
   this.renderPixel = function(x, y, type) {
