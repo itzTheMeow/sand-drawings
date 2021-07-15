@@ -5,7 +5,7 @@ const Materials = {
   },
   1: {
     name: "sand",
-    color: "#FFFFFF"
+    color: "#FF0000"
   }
 }
 
