@@ -1,1 +1,2 @@
-export default _ = (i) => document.getElementById(i);
+const _ = (i) => document.getElementById(i);
+export default _;
