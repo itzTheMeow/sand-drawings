@@ -1,12 +1,8 @@
 import config from "./config";
 import _ from "./util/_";
-import { GameCanvas, ctx, getSize } from "./GameCanvas";
+import { GameCanvas, ctx } from "./GameCanvas";
 import { disableBodyScroll } from "body-scroll-lock";
 
 disableBodyScroll(_("scroll-lock"), {
-  allowTouchMove: el => el.id == GameCanvas.id
+  _allowTouchMove: el => el.id == GameCanvas.id
 });
-
-let size = getSize();
-ctx.fillStyle = config.background;
-ctx.fillRect(0, 0, size.w, size.h);
