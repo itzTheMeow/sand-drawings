@@ -31,9 +31,9 @@ function Game() {
 
   this.tick = function () {
     this.pen.update();
-    this.renderer.update();
   };
   this.ticker = setInterval(this.tick.bind(this), 1);
+  this.renderer.startRender();
 }
 
 export default Game;

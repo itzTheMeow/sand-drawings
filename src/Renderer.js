@@ -19,7 +19,10 @@ function Renderer(game) {
       };
       this.renderPixel(pixel.x, pixel.y, pixel.mat);
     });
+    requestAnimationFrame(this.update.bind(this));
   };
-  this.update();
+  this.startRender = function () {
+    requestAnimationFrame(this.update.bind(this));
+  };
 }
 export default Renderer;
