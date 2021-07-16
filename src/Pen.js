@@ -9,16 +9,17 @@ function Pen(game) {
   this.stopDrawing = function () {
     this.isDrawing = false;
   };
-  game.canvas.onmousedown = this.startDrawing;
-  game.canvas.onmouseup = this.stopDrawing;
-  game.canvas.ontouchstart = this.startDrawing;
-  game.canvas.ontouchend = this.stopDrawing;
+  game.canvas.onmousedown = this.startDrawing.bind(this);
+  game.canvas.onmouseup = this.stopDrawing.bind(this);
+  game.canvas.ontouchstart = this.startDrawing.bind(this);
+  game.canvas.ontouchend = this.stopDrawing.bind(this);
+
   game.canvas.onmousemove = function (e) {
     this.mousePos = {
       x: e.offsetX,
       y: e.offsetY,
     };
-  };
+  }.bind(this);
 
   this.update = function () {
     if (this.isDrawing) game.pixels[`${this.mousePos.x},${this.mousePos.y}`] = 1;
