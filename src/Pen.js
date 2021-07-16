@@ -8,8 +8,10 @@ function Pen(game) {
   this.stopDrawing = function() {
     this.isDrawing = false;
   }
-  game.canvas.onmousedown = game.canvas.ontouchstart = this.startDrawing;
-  game.canvas.onmouseup = game.canvas.ontouchstop = this.stopDrawing;
+  game.canvas.onmousedown = this.startDrawing;
+  game.canvas.onmouseup = this.stopDrawing;
+  game.canvas.ontouchstart = this.startDrawing;
+  game.canvas.ontouchend = this.stopDrawing;
   
   this.update = function() {
     if(this.isDrawing) game.pixels["1,1"] = 1;
