@@ -1,13 +1,15 @@
 const Materials = {
   0: {
     name: "air",
-    color: "#000000"
+    color: "#000000",
+    fallSpeed: 0,
   },
   1: {
     name: "sand",
-    color: "#FF0000"
-  }
-}
+    color: "#FF0000",
+    fallSpeed: 1,
+  },
+};
 
 function getMaterial(id) {
   // will be more complex later to allow for modding
@@ -17,4 +19,4 @@ function allMaterials() {
   return Object.keys(Materials);
 }
 
-export { getMaterial, allMaterials }
+export { getMaterial, allMaterials };

@@ -6,4 +6,5 @@ module.exports = {
     filename: "script.js",
     path: path.resolve(__dirname, "site"),
   },
+  mode: "production",
 };

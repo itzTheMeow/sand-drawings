@@ -1,27 +1,25 @@
 import { getMaterial } from "./Materials";
-import config from "./config"
+import config from "./config";
 
 function Renderer(game) {
-  this.renderPixel = function(x, y, type) {
-    ctx.fillStyle = getMaterial(type).color;
-    ctx.fillRect(x, y, 1, 1);
-  }
-  
-  this.update = function() {
-    ctx.fillStyle = config.background;
-    ctx.fillRect(0, 0, game.size.w, game.size.h);
-    
-    Object.keys(game.pixels).forEach(p => {
+  this.renderPixel = function (x, y, type) {
+    game.ctx.fillStyle = getMaterial(type).color;
+    game.ctx.fillRect(x, y, 1, 1);
+  };
+
+  this.update = function () {
+    game.ctx.fillStyle = config.background;
+    game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
+
+    Object.keys(game.pixels).forEach((p) => {
       let pixel = {
         x: Number(p.split(",")[0]),
         y: Number(p.split(",")[0]),
-        mat: game.pixels[p]
+        mat: game.pixels[p],
       };
-      if(pixel.mat != 0) {
-        this.renderPixel(pixel.x, pixel.y, pixel.mat);
-      }
-    })
-  }
+      this.renderPixel(pixel.x, pixel.y, pixel.mat);
+    });
+  };
   this.update();
 }
 export default Renderer;
