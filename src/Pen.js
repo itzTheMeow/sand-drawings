@@ -19,10 +19,18 @@ function Pen(game) {
       x: e.offsetX,
       y: e.offsetY,
     };
+    this.update();
+  }.bind(this);
+  game.canvas.ontouchmove = function (e) {
+    this.mousePos = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+    this.update();
   }.bind(this);
 
   this.update = function () {
-    if (this.isDrawing) game.pixels[`${this.mousePos.x},${this.mousePos.y}`] = 1;
+    if (this.isDrawing) game.pixels[this.mousePos.x][this.mousePos.y] = 1;
   };
 }
 

@@ -9,19 +9,18 @@ function Game() {
   this.canvas.width = window.innerWidth;
   this.canvas.height = window.innerHeight;
 
-  this.pixels = {};
+  this.pixels = [];
   this.fillPixels = function (type) {
     let posX = 0;
     let posY = 0;
-    while (true) {
-      posX++;
-      while (true) {
-        posY++;
-        this.pixels[`${posX},${posY}`] = type;
-        if (posY >= this.canvas.width) break;
-      }
+    while (posX < this.canvas.width) {
+      this.pixels[posX] = new Array(this.canvas.height);
       posY = 0;
-      if (posX >= this.canvas.height) break;
+      while (posY < this.canvas.height + 1) {
+        this.pixels[posX][posY] = type;
+        posY++;
+      }
+      posX++;
     }
   };
   this.fillPixels(0);
