@@ -9,7 +9,7 @@ function Renderer(game) {
 
   this.update = function () {
     game.ctx.fillStyle = config.background;
-    game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
+    //game.ctx.fillRect(0, 0, game.canvas.width, game.canvas.height);
 
     Object.keys(game.pixels).forEach((p) => {
       let pixel = {
