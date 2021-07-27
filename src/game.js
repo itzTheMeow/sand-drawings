@@ -1,5 +1,13 @@
 "use strict";
 
+import Auth from "./auth";
+import Draw2D from "./draw2d";
+import initDrags from "./drag";
+import Mouse from "./mouse";
+import Spawner from "./spawner";
+
+Auth();
+
 /*
  Elements
 */
@@ -744,3 +752,5 @@ Game.prototype.dot = function (x, y) {
   }
   return this.grid[x][y];
 };
+
+export default Game;

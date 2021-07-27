@@ -67,3 +67,5 @@ Draw2D.prototype.pixel = function (x, y, r, g, b) {
   //     // alpha
   // }
 };
+
+export default Draw2D;

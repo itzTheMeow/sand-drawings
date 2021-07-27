@@ -4,7 +4,7 @@ function Mouse(canvas) {
   this.y = 0;
   this.is_down = false;
   this.size = 5;
-  this.tool = SAND;
+  this.tool = 2;
   this.canvas = canvas;
 
   this.canvas.addEventListener("mousedown", this.handle_mouse_down.bind(this), false);
@@ -105,3 +105,5 @@ Mouse.prototype.handle_mouse_move = function (event) {
   this.x = pos.x - Math.floor(test.mouse.size / 2);
   this.y = pos.y - Math.floor(test.mouse.size / 2);
 };
+
+export default Mouse;

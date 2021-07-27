@@ -1,23 +1,215 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
   <head>
-    <title>Sand Drawings</title>
-    <meta charset="UTF-8" />
-    <meta name="description" content="A cool sand game." />
-    <meta name="keywords" content="sand,drawings,sand-drawings,fun,game" />
-    <meta name="author" content="Meow" />
+    <meta charset="utf-8" />
+    <meta name="og:title" content="Sand Drawings" />
+    <meta
+      name="og:image"
+      content="https://cdn.glitch.com/940018fc-c2fe-427c-a43b-34505af82640%2FLogo.png?v=1576860889288"
+    />
+    <meta name="og:description" content="Draw with sand!" />
+    <meta name="og:site_name" content="sand-drawings" />
+    <meta name="keywords" content="sand-drawings" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sandbox</title>
+    <link
+      rel="icon"
+      href="https://cdn.glitch.com/940018fc-c2fe-427c-a43b-34505af82640%2FLogo.png?v=1576860889288"
+    />
 
-    <link rel="stylesheet" href="./style.css" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script
+      id="lzutf8"
+      src="https://cdn.jsdelivr.net/npm/lzutf8/build/production/lzutf8.min.js"
+    ></script>
 
-    <link rel="icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
 
   <body>
-    <span id="scroll-lock" style="display: none;"></span>
-    <canvas id="canvas"></canvas>
+    <div class="box" float-left>
+      <canvas width="500" height="500" id="game"> Your browser does not support canvas :( </canvas>
+    </div>
+    <div id="cursor"></div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!--
+<div class="box box-withtitle">
+  <table>
+    <tr>
+
+    </tr>
+  </table>
+</div>
+-->
+
+    <div class="box box-withtitle" id="solids">
+      <div class="box-title" id="solids-title">Solids</div>
+      <table>
+        <tr>
+          <td>
+            <button
+              class="element-button"
+              onclick="tool(SAND);"
+              id="SAND"
+              title="Change your tool to Sand"
+            >
+              Sand
+            </button>
+          </td>
+
+          <td>
+            <button class="element-button" onclick="tool(CONCRETE);" id="CONCRETE">Concrete</button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(LIFE);" id="LIFE" title="">Life</button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(SALT);" id="SALT" title="">Salt</button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(WOOD);" id="WOOD" title="">Wood</button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(WALL);" id="WALL" title="">Wall</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="box box-withtitle" id="spawners">
+      <div class="box-title" id="spawners-title">Spawners</div>
+      <table>
+        <tr>
+          <td>
+            <button class="element-button" onclick="tool(SPRING);" id="SPRING" title="">
+              Spring
+            </button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(OIL_WELL);" id="OIL_WELL" title="">
+              Oil Well
+            </button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(GAS_PUMP);" id="GAS_PUMP" title="">
+              Gas Pump
+            </button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(VOLCANO);" id="VOLCANO" title="">
+              Volcano
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="box box-withtitle" id="liquids">
+      <div class="box-title" id="liquids-title">Liquids</div>
+      <table>
+        <tr>
+          <td>
+            <button class="element-button" onclick="tool(WATER);" id="WATER">Water</button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(SALT_WATER);" id="SALT_WATER">
+              Salt Water
+            </button>
+          </td>
+
+          <td>
+            <button class="element-button" onclick="tool(FIRE);" id="FIRE">Fire</button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(OIL);" id="OIL">Oil</button>
+          </td>
+
+          <td>
+            <button class="element-button" onclick="tool(GASOLINE);" id="GASOLINE">Gasoline</button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(DARK_MATTER);" id="DARK_MATTER">
+              Dark Matter
+            </button>
+          </td>
+          <td>
+            <button class="element-button" onclick="tool(LAVA);" id="LAVA">Lava</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="other">
+      <p id="size">
+        <button onclick="test.mouse.size = 50;">Gigantic</button>
+        <button onclick="test.mouse.size = 20;">Large</button>
+        <button onclick="test.mouse.size = 5;">Medium</button>
+        <button onclick="test.mouse.size = 2;">Small</button>
+        <button onclick="test.mouse.size = 1;">Micro</button>
+        <button onclick="test.mouse.size = 200;">Hax</button>
+        <button onclick="test.mouse.size = 400;">Chonker</button>
+      </p>
+      <p id="other-">
+        <button onclick="test.clear();">Clear</button>
+        <button onclick="test.fill();">Fill</button>
+        <button onclick="test.updateDelay = 100;">x0.5</button>
+        <button onclick="test.updateDelay = 8;">x1</button>
+        <button onclick="test.updateDelay = 5;">x2</button>
+        <button onclick="test.updateDelay = 0;">x3</button>
+        <!--$-->
+        <button onclick="exp()">Export</button>
+        <button onclick="imp()">Import</button>
+        <button onclick="connect()">Connect</button>
+        <!--$-->
+        <button
+          onclick="window.location.href='https://discordapp.com/oauth2/authorize?client_id=705470771287293963&redirect_uri=https%3A%2F%2Fsand-drawings.glitch.me%2Fdiscord-auth&response_type=token&scope=identify%20gdm.join'"
+        >
+          Link Discord
+        </button>
+        Your ID: <b id="id"></b>
+        <!--$-->
+        <a href="https://sand-drawings.glitch.me/#" id="join">Your Join URL</a>
+        <!--$-->
+      </p>
+    </div>
+    <!--$-->
+    <img id="otherCanvas" />
+    <div id="chat">
+      <div id="messages-title" noselect>Chat</div>
+      <div id="messages-collapse"></div>
+      <div id="messages-collapse-top"></div>
+      <div id="messages">
+        <div id="msgs" scrollbar></div>
+        <input id="send" placeholder="Send a Message" maxlength="1500" />
+      </div>
+    </div>
+
+    <div id="global-chat" style="display: none">
+      <div id="global-title">Global Chat</div>
+      <div id="global-chat-box">
+        <div id="global-msgs"></div>
+        <input id="global-send" placeholder="Send a Message to Everyone" />
+      </div>
+    </div>
+    <!--$-->
+    <footer>
+      <!--$-->
+      <div id="global-preview" onclick="showGlobal()" style="position: absolute">
+        Click to open the global chat!
+      </div>
+      <!--$-->
+
+      <span>
+        Inspired by
+        <a href="https://github.com/Kledal/html5-sand-game" style="color: inherit">Kledal</a>
+      </span>
+
+      <div id="hotkeys" onclick="showHotkeys()" style="float: right">[F1]</div>
+    </footer>
+
+    <div id="tooltip">Tooltip</div>
+
     <script src="./script.js"></script>
   </body>
 </html>

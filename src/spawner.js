@@ -30,3 +30,5 @@ Spawner.prototype.update = function (game) {
 
   this.add_obj(x, y, game);
 };
+
+export default Spawner;

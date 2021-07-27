@@ -195,3 +195,5 @@ function initDrags(Game) {
     }
   })(); // liquids
 }
+
+export default initDrags;

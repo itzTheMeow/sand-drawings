@@ -1,12 +1,264 @@
-* {
-  box-sizing: border-box;
+html {
+  cursor: default;
+  background-color: #fff;
+  background-color: #36393f;
 }
 body {
-  margin: 0px;
-  padding: 0px;
+  font-family: "nevis Bold";
+  color: var(--text);
 }
-#canvas {
+
+button {
+  cursor: pointer;
+  border-radius: 6px;
+  color: White;
+  background-color: var(--button);
+  border: 1px solid Black;
+  font-family: "nevis Bold";
+  position: relative;
+  box-sizing: border-box;
+}
+button:hover {
+  background-color: var(--button-hover);
+  border: 2px solid Black;
+}
+#game {
+  float: left;
+  background-color: #000;
+  cursor: none;
+  border-radius: 3px;
+}
+footer {
+  bottom: -13px;
+  left: 0px;
+  position: fixed;
+  z-index: 150;
+  height: 25px;
+  display: block;
+  width: 99.25%;
+  background-color: var(--main-darker);
+  padding: 5px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.element-button {
+  width: 75px;
+  height: 36.5px;
+  margin-bottom: 1px;
+}
+#other {
+  float: left;
+  width: 100%;
+}
+.box-withtitle {
+  padding: 16px 6px 6px 6px !important;
+}
+.box {
+  background-color: var(--main);
+  display: block;
+  padding: 6px;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 8px;
+  position: relative;
+  margin: 4px;
+  border: 1px solid var(--main-blacker);
+}
+.box-title {
+  color: white;
+  font-size: 12px;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 3px;
+  width: 90%;
+}
+td {
+  display: block;
+}
+#cursor {
+  display: none;
+  pointer-events: none;
+  position: absolute;
+}
+
+#solids {
+  position: absolute;
+  top: 12px;
+  left: 530px;
+  margin: 0;
+}
+#solids-title {
+  cursor: move;
+}
+#spawners {
+  position: absolute;
+  top: 12px;
+  left: 629px;
+  margin: 0;
+}
+#spawners-title {
+  cursor: move;
+}
+#liquids {
+  position: absolute;
+  top: 12px;
+  left: 728px;
+  margin: 0;
+}
+#liquids-title {
+  cursor: move;
+}
+
+#chat {
+  position: absolute;
+  top: 285px;
+  left: 530px;
+  width: 150px;
+}
+#messages {
+  position: absolute;
+  background-color: var(--main-dark);
+  color: var(--text);
+  width: 100%;
+  height: 255px;
+  border-radius: 0px 0px 6px 6px;
+  top: 25px;
+  left: 0px;
+  padding: 3px;
+  border: 1px solid var(--main-blacker);
+}
+#messages-title {
+  position: absolute;
+  cursor: move;
+  background-color: var(--main-black);
+  width: 100%;
+  border-radius: 6px 6px 0px 0px;
+  top: 0px;
+  left: 0px;
+  padding: 3px;
+  border: 1px solid var(--main-blacker);
+  text-align: center;
+}
+#messages-collapse {
+  position: absolute;
+  width: 12px;
+  height: 4px;
+  left: 137px;
+  top: 12px;
+  background-color: var(--main);
+  border-radius: 10px;
+  cursor: pointer;
+}
+#messages-collapse-top {
+  position: absolute;
+  width: 4px;
+  height: 12px;
+  left: 141px;
+  top: 8px;
+  background-color: var(--main);
+  border-radius: 10px;
+  cursor: pointer;
+  display: none;
+}
+#msgs {
+  width: 100%;
+  height: 93%;
+  overflow: auto;
+}
+#send {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  text-align: center;
+}
+#send:focus {
+  outline: none;
+}
+#otherCanvas {
+  position: absolute;
+  right: 5px;
+}
+
+#global-preview {
+  cursor: pointer;
+}
+#global-chat {
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+}
+#global-chat-box {
+  width: 100%;
+  height: 100%;
+  width: 200px;
+  height: 250px;
+  background-color: var(--main-dark);
+  padding: 3px;
+  border-radius: 0px 0px 4px 4px;
+  border: 1px solid var(--main-blacker);
+}
+#global-title {
+  padding-top: 4px;
+  text-align: center;
+  border-radius: 4px 4px 0px 0px;
+  border: 1px solid var(--main-blacker);
+  border-bottom: 0;
+  padding: 3px;
+  background-color: var(--main-black);
+}
+#global-msgs {
+  width: 100%;
+  height: 91%;
+  overflow: auto;
+}
+#global-send {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  text-align: center;
+}
+#global-send:focus {
+  outline: none;
+}
+
+#tooltip {
+  display: none;
+}
+
+[float-left] {
+  float: left;
+}
+[disabled]#send {
+  cursor: not-allowed;
+}
+
+#msgs::-webkit-scrollbar,
+#msgs::-webkit-scrollbar-button,
+#msgs::-webkit-scrollbar-track,
+#msgs::-webkit-scrollbar-track-piece,
+#msgs::-webkit-scrollbar-thumb,
+#msgs::-webkit-scrollbar-corner,
+#msgs::-webkit-resizer {
+  background: transparent;
+}
+#msgs::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+#msgs::-webkit-scrollbar-track-piece {
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
+#msgs::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 6px;
+}
+#msgs::-webkit-scrollbar-thumb:hover {
+  background: #969696;
+}
+#msgs::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
 }

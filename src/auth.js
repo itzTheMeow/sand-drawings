@@ -47,4 +47,4 @@ async function Auth() {
   }
 }
 
-Auth();
+export default Auth;
