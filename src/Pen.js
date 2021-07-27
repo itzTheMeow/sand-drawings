@@ -3,8 +3,19 @@ function Pen(game) {
 
   this.isDrawing = false;
   this.mousePos = { x: 0, y: 0 };
-  this.startDrawing = function () {
+  this.startDrawing = function (e) {
     this.isDrawing = true;
+    if (e.touches)
+      this.mousePos = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      };
+    else
+      this.mousePos = {
+        x: e.offsetX,
+        y: e.offsetY,
+      };
+    this.update();
   };
   this.stopDrawing = function () {
     this.isDrawing = false;
@@ -30,7 +41,13 @@ function Pen(game) {
   }.bind(this);
 
   this.update = function () {
-    if (this.isDrawing) game.pixels[this.mousePos.x][this.mousePos.y] = 1;
+    if (this.isDrawing) {
+      for (var x = this.mousePos.x; x < this.mousePos.x + this.size; x++) {
+        for (var y = this.mousePos.y; y < this.mousePos.y + this.size; y++) {
+          (game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] = 1;
+        }
+      }
+    }
   };
 }
 
