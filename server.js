@@ -24,6 +24,7 @@ require("esbuild")
     entryPoints: ["src/script.js"],
     bundle: true,
     outfile: "site/script.js",
+    watch: true,
   })
   .then(() => {
     console.log("Built!");

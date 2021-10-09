@@ -230,13 +230,13 @@
   function Game() {
     this.canvas = __default("canvas");
     this.ctx = this.canvas.getContext("2d");
-    this.canvas.width = window.innerWidth;
+    this.canvas.width = window.innerWidth + 2;
     this.canvas.height = window.innerHeight;
     this.pixels = [];
     this.fillPixels = function(type) {
       let posX = 0;
       let posY = 0;
-      while (posX < this.canvas.width) {
+      while (posX < this.canvas.width + 10) {
         this.pixels[posX] = new Array(this.canvas.height);
         posY = 0;
         while (posY < this.canvas.height + 1) {
