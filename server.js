@@ -18,6 +18,16 @@ else console.error("No css.");
 
 app.use(express.static(__dirname + "/site"));
 
-app.listen(config.port, () => {
-  console.log("Sand Drawings is online and listening on port " + config.port);
-});
+console.log("Building...");
+require("esbuild")
+  .build({
+    entryPoints: ["src/script.js"],
+    bundle: true,
+    outfile: "site/script.js",
+  })
+  .then(() => {
+    console.log("Built!");
+    app.listen(config.port, () => {
+      console.log("Sand Drawings is online and listening on port " + config.port);
+    });
+  });

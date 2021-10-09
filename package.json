@@ -4,7 +4,7 @@
   "description": "A sand game.",
   "main": "server.js",
   "scripts": {
-    "start": "npx webpack --config webpack.config.js && node .",
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +27,7 @@
   "homepage": "https://github.com/itzTheMeow/sand-drawings#readme",
   "dependencies": {
     "body-scroll-lock": "^3.1.5",
+    "esbuild": "^0.13.4",
     "express": "^4.17.1",
     "sass": "^1.35.2",
     "webpack": "^5.44.0",
