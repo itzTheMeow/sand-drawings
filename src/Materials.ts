@@ -11,6 +11,11 @@ const Materials = {
   },
 };
 
+enum MaterialTypes {
+  air,
+  sand,
+}
+
 function getMaterial(id) {
   // will be more complex later to allow for modding
   return Materials[id] || Materials[0];
@@ -19,4 +24,4 @@ function allMaterials() {
   return Object.keys(Materials);
 }
 
-export { getMaterial, allMaterials };
+export { getMaterial, allMaterials, MaterialTypes };

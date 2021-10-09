@@ -21,7 +21,7 @@ app.use(express.static(__dirname + "/site"));
 console.log("Building...");
 require("esbuild")
   .build({
-    entryPoints: ["src/script.js"],
+    entryPoints: ["src/script.ts"],
     bundle: true,
     outfile: "site/script.js",
     watch: true,

@@ -1,5 +1,5 @@
 (() => {
-  // src/util/_.js
+  // src/util/_.ts
   var _ = (i) => document.getElementById(i);
   var __default = _;
 
@@ -117,7 +117,7 @@
     }
   };
 
-  // src/Materials.js
+  // src/Materials.ts
   var Materials = {
     0: {
       name: "air",
@@ -130,36 +130,44 @@
       fallSpeed: 1
     }
   };
+  var MaterialTypes;
+  (function(MaterialTypes3) {
+    MaterialTypes3[MaterialTypes3["air"] = 0] = "air";
+    MaterialTypes3[MaterialTypes3["sand"] = 1] = "sand";
+  })(MaterialTypes || (MaterialTypes = {}));
   function getMaterial(id) {
     return Materials[id] || Materials[0];
   }
 
-  // src/util/HEX2RGB.js
+  // src/util/HEX2RGB.ts
   var hexToRgb = (hex) => hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => "#" + r + r + g + g + b + b).substring(1).match(/.{2}/g).map((x) => parseInt(x, 16));
 
-  // src/Renderer.js
+  // src/Renderer.ts
   var renderCache = {};
-  function Renderer(game) {
-    this.imgData = game.ctx.createImageData(game.canvas.width, game.canvas.height);
-    this.pixData = this.imgData.data;
-    this.renderPixel = function(x, y, type) {
+  var Renderer = class {
+    constructor(game) {
+      this.game = game;
+      this.imgData = game.ctx.createImageData(game.canvas.width, game.canvas.height);
+      this.pixData = this.imgData.data;
+    }
+    renderPixel(x, y, type) {
       let color = renderCache[type] || (renderCache[type] = hexToRgb(getMaterial(type).color));
       let i = (this.imgData.width * (y - 1) + x) * 4;
       this.pixData[i] = color[0];
       this.pixData[i + 1] = color[1];
       this.pixData[i + 2] = color[2];
       this.pixData[i + 3] = 255;
-    };
-    this.finishFrame = function() {
-      game.ctx.putImageData(this.imgData, 0, 0);
-    };
-    this.update = function() {
+    }
+    finishFrame() {
+      this.game.ctx.putImageData(this.imgData, 0, 0);
+    }
+    update() {
       let x = 0;
       let y = 0;
-      while (x < game.canvas.width - 1) {
-        y = game.canvas.height;
+      while (x < this.game.canvas.width - 1) {
+        y = this.game.canvas.height;
         while (y >= 0) {
-          let mat = game.pixels[x][y];
+          let mat = this.game.pixels[x][y];
           this.renderPixel(x, y, mat);
           y--;
         }
@@ -167,19 +175,48 @@
       }
       this.finishFrame();
       requestAnimationFrame(this.update.bind(this));
-    };
-    this.startRender = function() {
+    }
+    startRender() {
       requestAnimationFrame(this.update.bind(this));
-    };
-  }
-  var Renderer_default = Renderer;
+    }
+  };
 
-  // src/Pen.js
-  function Pen(game) {
-    this.size = 5;
-    this.isDrawing = false;
-    this.mousePos = { x: 0, y: 0 };
-    this.startDrawing = function(e) {
+  // src/Pen.ts
+  var Pen = class {
+    constructor(game) {
+      this.game = game;
+      this.size = 5;
+      this.isDrawing = false;
+      this.mousePos = { x: 0, y: 0 };
+      this.update = function() {
+        if (this.isDrawing) {
+          for (var x = this.mousePos.x; x < this.mousePos.x + this.size; x++) {
+            for (var y = this.mousePos.y; y < this.mousePos.y + this.size; y++) {
+              (this.game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] = 1;
+            }
+          }
+        }
+      };
+      game.canvas.onmousedown = this.startDrawing.bind(this);
+      game.canvas.onmouseup = this.stopDrawing.bind(this);
+      game.canvas.ontouchstart = this.startDrawing.bind(this);
+      game.canvas.ontouchend = this.stopDrawing.bind(this);
+      game.canvas.onmousemove = function(e) {
+        this.mousePos = {
+          x: e.offsetX,
+          y: e.offsetY
+        };
+        this.update();
+      }.bind(this);
+      game.canvas.ontouchmove = function(e) {
+        this.mousePos = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY
+        };
+        this.update();
+      }.bind(this);
+    }
+    startDrawing(e) {
       this.isDrawing = true;
       if (e.touches)
         this.mousePos = {
@@ -192,48 +229,27 @@
           y: e.offsetY
         };
       this.update();
-    };
-    this.stopDrawing = function() {
+    }
+    stopDrawing() {
       this.isDrawing = false;
-    };
-    game.canvas.onmousedown = this.startDrawing.bind(this);
-    game.canvas.onmouseup = this.stopDrawing.bind(this);
-    game.canvas.ontouchstart = this.startDrawing.bind(this);
-    game.canvas.ontouchend = this.stopDrawing.bind(this);
-    game.canvas.onmousemove = function(e) {
-      this.mousePos = {
-        x: e.offsetX,
-        y: e.offsetY
-      };
-      this.update();
-    }.bind(this);
-    game.canvas.ontouchmove = function(e) {
-      this.mousePos = {
-        x: e.touches[0].clientX,
-        y: e.touches[0].clientY
-      };
-      this.update();
-    }.bind(this);
-    this.update = function() {
-      if (this.isDrawing) {
-        for (var x = this.mousePos.x; x < this.mousePos.x + this.size; x++) {
-          for (var y = this.mousePos.y; y < this.mousePos.y + this.size; y++) {
-            (game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] = 1;
-          }
-        }
-      }
-    };
-  }
-  var Pen_default = Pen;
+    }
+  };
 
-  // src/Game.js
-  function Game() {
-    this.canvas = __default("canvas");
-    this.ctx = this.canvas.getContext("2d");
-    this.canvas.width = window.innerWidth + 2;
-    this.canvas.height = window.innerHeight;
-    this.pixels = [];
-    this.fillPixels = function(type) {
+  // src/Game.ts
+  var Game = class {
+    constructor() {
+      this.pixels = [];
+      this.ticker = setInterval(this.tick.bind(this), 1);
+      this.canvas = __default("canvas");
+      this.ctx = this.canvas.getContext("2d");
+      this.canvas.width = window.innerWidth + 2;
+      this.canvas.height = window.innerHeight;
+      this.fillPixels(MaterialTypes.air);
+      this.pen = new Pen(this);
+      this.renderer = new Renderer(this);
+      this.renderer.startRender();
+    }
+    fillPixels(type) {
       let posX = 0;
       let posY = 0;
       while (posX < this.canvas.width + 10) {
@@ -245,19 +261,13 @@
         }
         posX++;
       }
-    };
-    this.fillPixels(0);
-    this.pen = new Pen_default(this);
-    this.renderer = new Renderer_default(this);
-    this.tick = function() {
+    }
+    tick() {
       this.pen.update();
-    };
-    this.ticker = setInterval(this.tick.bind(this), 1);
-    this.renderer.startRender();
-  }
-  var Game_default = Game;
+    }
+  };
 
-  // src/script.js
-  window.Engine = new Game_default();
+  // src/script.ts
+  window.Engine = new Game();
   disableBodyScroll(__default("scroll-lock"));
 })();
