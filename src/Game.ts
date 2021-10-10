@@ -2,7 +2,6 @@ import Renderer from "./Renderer";
 import Pen from "./Pen";
 import _ from "./util/_";
 import { MaterialTypes } from "./Materials";
-import Vec2 from "./Vec2";
 import Physics from "./Physics";
 
 export default class Game {

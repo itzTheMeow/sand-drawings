@@ -6,6 +6,7 @@ interface Material {
 enum MaterialTypes {
   air,
   sand,
+  wall,
 }
 
 let Materials: Material[] = [];
@@ -16,8 +17,13 @@ Materials[MaterialTypes.air] = {
 };
 Materials[MaterialTypes.sand] = {
   name: "sand",
-  color: "#FF0000",
+  color: "#d2b48c",
   fallSpeed: 1,
+};
+Materials[MaterialTypes.wall] = {
+  name: "wall",
+  color: "#767676",
+  fallSpeed: 0,
 };
 
 function getMaterial(id: MaterialTypes) {

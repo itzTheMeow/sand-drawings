@@ -122,6 +122,7 @@
   (function(MaterialTypes3) {
     MaterialTypes3[MaterialTypes3["air"] = 0] = "air";
     MaterialTypes3[MaterialTypes3["sand"] = 1] = "sand";
+    MaterialTypes3[MaterialTypes3["wall"] = 2] = "wall";
   })(MaterialTypes || (MaterialTypes = {}));
   var Materials = [];
   Materials[0] = {
@@ -131,8 +132,13 @@
   };
   Materials[1] = {
     name: "sand",
-    color: "#FF0000",
+    color: "#d2b48c",
     fallSpeed: 1
+  };
+  Materials[2] = {
+    name: "wall",
+    color: "#767676",
+    fallSpeed: 0
   };
   function getMaterial(id) {
     return Materials[id] || Materials[0];
