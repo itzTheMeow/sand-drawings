@@ -20,6 +20,9 @@ export default class Vec2 {
   duplicate() {
     return new Vec2(this.x, this.y);
   }
+  equals(other: Vec2) {
+    return this.x == other.x && this.y == other.y;
+  }
 
   toString() {
     return `${this.x}, ${this.y}`;

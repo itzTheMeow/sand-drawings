@@ -1,7 +1,8 @@
 import Game from "./Game";
-import { MaterialTypes } from "./Materials";
+import { getMaterial, MaterialTypes } from "./Materials";
 import Vec2 from "./Vec2";
 import pointAlongLine from "./util/pointAlongLine";
+import _ from "./util/_";
 
 export default class Pen {
   public size = 5;
@@ -15,6 +16,10 @@ export default class Pen {
     game.canvas.onmousedown = game.canvas.ontouchstart = this.startDrawing.bind(this);
     game.canvas.onmousemove = game.canvas.ontouchmove = this.drawAt.bind(this);
     game.canvas.onmouseup = game.canvas.ontouchend = this.stopDrawing.bind(this);
+    game.canvas.onmouseleave = function () {
+      this.mousePos.set(0, 0);
+      this.stopDrawing();
+    }.bind(this);
   }
 
   public startDrawing(e: MouseEvent | TouchEvent) {
@@ -32,6 +37,18 @@ export default class Pen {
   public stopDrawing() {
     this.isDrawing = false;
     this.lastMousePos = undefined;
+  }
+
+  public penUpdater = setInterval(this.updatePenElement.bind(this), 1);
+  public updatePenElement() {
+    let penElement = _("pen");
+    if (this.mousePos.x && this.mousePos.y) {
+      penElement.style.display = "block";
+      penElement.style.backgroundColor = getMaterial(this.material).color;
+      penElement.style.width = penElement.style.height = this.size + "px";
+      penElement.style.left = this.mousePos.x - this.size / 2 + "px";
+      penElement.style.top = this.mousePos.y - this.size / 2 + "px";
+    } else penElement.style.display = "none";
   }
 
   public update() {
@@ -55,11 +72,13 @@ export default class Pen {
   }
 
   public draw(pos: Vec2) {
-    for (let x = pos.x; x < pos.x + this.size; x++) {
-      for (let y = pos.y; y < pos.y + this.size; y++) {
-        (this.game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] =
-          this.material;
-      }
-    }
+    let t = this;
+    new Array(this.size).fill(0).forEach((_, x) => {
+      new Array(this.size).fill(0).forEach((_, y) => {
+        (t.game.pixels[Math.round(pos.x + x - t.size / 2)] || [])[
+          Math.round(pos.y + y - t.size / 2)
+        ] = t.material;
+      });
+    });
   }
 }

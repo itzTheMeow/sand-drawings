@@ -7,19 +7,19 @@ export default class Physics {
   constructor(public game: Game) {}
 
   public update() {
-    let x = this.game.canvas.width;
-    let y = 0;
-    while (x > 0) {
-      y = 0;
-      while (y < this.game.canvas.height) {
+    let t = this;
+    this.game.pixels.forEach((p, x) => {
+      let pa = [...p].reverse();
+      [...p.filter((a) => a != MaterialTypes.air)].reverse().forEach((mat, yo) => {
+        yo = pa.indexOf(mat);
+        pa[yo] = 0;
+        let y = t.game.canvas.height - (yo + 1);
         let pos = new Vec2(x, y);
-        //@ts-ignore
-        let mat = this.game.getPixel(...pos.toArray());
+
         let materialProps = getMaterial(mat);
 
         if (materialProps.fallSpeed) {
-          if (y < this.game.canvas.height - 1 && !this.game.getPixel(pos.x, pos.y + 1)) {
-            let t = this;
+          if (y < t.game.canvas.height - 1 && !t.game.getPixel(pos.x, pos.y + 1)) {
             function tryFall(tried: number) {
               let newPos = pos.duplicate().add(0, materialProps.fallSpeed);
               let posDet = rand(1, 12);
@@ -38,10 +38,7 @@ export default class Physics {
             tryFall(0);
           }
         }
-
-        y++;
-      }
-      x--;
-    }
+      });
+    });
   }
 }

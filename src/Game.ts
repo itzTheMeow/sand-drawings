@@ -29,15 +29,19 @@ export default class Game {
   }
 
   public getPixel(x: number, y: number) {
-    return this.pixels[x][y];
+    try {
+      return this.pixels[x][y];
+    } catch (e) {}
   }
   public setPixel(x: number, y: number, type: MaterialTypes) {
-    this.pixels[x][y] = type;
+    try {
+      this.pixels[x][y] = type;
+    } catch (e) {}
   }
 
   public fillPixels(type: MaterialTypes) {
     let posX = 0;
-    while (posX < this.canvas.width + 10) {
+    while (posX < this.canvas.width) {
       this.pixels[posX] = new Array(this.canvas.height).fill(type);
       posX++;
     }

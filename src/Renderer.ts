@@ -23,7 +23,8 @@ export default class Renderer {
     this.pixData[i + 3] = 255; // alpha
   }
   public finishFrame() {
-    this.game.ctx.putImageData(this.imgData, 0, 0);
+    let ctx = this.game.ctx;
+    ctx.putImageData(this.imgData, 0, 0);
   }
 
   public update() {

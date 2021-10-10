@@ -164,7 +164,8 @@
       this.pixData[i + 3] = 255;
     }
     finishFrame() {
-      this.game.ctx.putImageData(this.imgData, 0, 0);
+      let ctx = this.game.ctx;
+      ctx.putImageData(this.imgData, 0, 0);
     }
     update() {
       let t = this;
@@ -205,6 +206,9 @@
     duplicate() {
       return new Vec2(this.x, this.y);
     }
+    equals(other) {
+      return this.x == other.x && this.y == other.y;
+    }
     toString() {
       return `${this.x}, ${this.y}`;
     }
@@ -227,9 +231,14 @@
       this.material = MaterialTypes.sand;
       this.isDrawing = false;
       this.mousePos = new Vec2(0, 0);
+      this.penUpdater = setInterval(this.updatePenElement.bind(this), 1);
       game.canvas.onmousedown = game.canvas.ontouchstart = this.startDrawing.bind(this);
       game.canvas.onmousemove = game.canvas.ontouchmove = this.drawAt.bind(this);
       game.canvas.onmouseup = game.canvas.ontouchend = this.stopDrawing.bind(this);
+      game.canvas.onmouseleave = function() {
+        this.mousePos.set(0, 0);
+        this.stopDrawing();
+      }.bind(this);
     }
     startDrawing(e) {
       this.isDrawing = true;
@@ -246,6 +255,17 @@
     stopDrawing() {
       this.isDrawing = false;
       this.lastMousePos = void 0;
+    }
+    updatePenElement() {
+      let penElement = __default("pen");
+      if (this.mousePos.x && this.mousePos.y) {
+        penElement.style.display = "block";
+        penElement.style.backgroundColor = getMaterial(this.material).color;
+        penElement.style.width = penElement.style.height = this.size + "px";
+        penElement.style.left = this.mousePos.x - this.size / 2 + "px";
+        penElement.style.top = this.mousePos.y - this.size / 2 + "px";
+      } else
+        penElement.style.display = "none";
     }
     update() {
       if (this.isDrawing) {
@@ -267,11 +287,12 @@
       }
     }
     draw(pos) {
-      for (let x = pos.x; x < pos.x + this.size; x++) {
-        for (let y = pos.y; y < pos.y + this.size; y++) {
-          (this.game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] = this.material;
-        }
-      }
+      let t = this;
+      new Array(this.size).fill(0).forEach((_2, x) => {
+        new Array(this.size).fill(0).forEach((_3, y) => {
+          (t.game.pixels[Math.round(pos.x + x - t.size / 2)] || [])[Math.round(pos.y + y - t.size / 2)] = t.material;
+        });
+      });
     }
   };
 
@@ -285,16 +306,17 @@
       this.game = game;
     }
     update() {
-      let x = this.game.canvas.width;
-      let y = 0;
-      while (x > 0) {
-        y = 0;
-        while (y < this.game.canvas.height) {
+      let t = this;
+      this.game.pixels.forEach((p, x) => {
+        let pa = [...p].reverse();
+        [...p.filter((a) => a != MaterialTypes.air)].reverse().forEach((mat, yo) => {
+          yo = pa.indexOf(mat);
+          pa[yo] = 0;
+          let y = t.game.canvas.height - (yo + 1);
           let pos = new Vec2(x, y);
-          let mat = this.game.getPixel(...pos.toArray());
           let materialProps = getMaterial(mat);
           if (materialProps.fallSpeed) {
-            if (y < this.game.canvas.height - 1 && !this.game.getPixel(pos.x, pos.y + 1)) {
+            if (y < t.game.canvas.height - 1 && !t.game.getPixel(pos.x, pos.y + 1)) {
               let tryFall = function(tried) {
                 let newPos = pos.duplicate().add(0, materialProps.fallSpeed);
                 let posDet = rand_default(1, 12);
@@ -311,14 +333,11 @@
                 t.game.setPixel(pos.x, pos.y, MaterialTypes.air);
                 t.game.setPixel(newPos.x, newPos.y, mat);
               };
-              let t = this;
               tryFall(0);
             }
           }
-          y++;
-        }
-        x--;
-      }
+        });
+      });
     }
   };
 
@@ -338,14 +357,20 @@
       this.renderer.startRender();
     }
     getPixel(x, y) {
-      return this.pixels[x][y];
+      try {
+        return this.pixels[x][y];
+      } catch (e) {
+      }
     }
     setPixel(x, y, type) {
-      this.pixels[x][y] = type;
+      try {
+        this.pixels[x][y] = type;
+      } catch (e) {
+      }
     }
     fillPixels(type) {
       let posX = 0;
-      while (posX < this.canvas.width + 10) {
+      while (posX < this.canvas.width) {
         this.pixels[posX] = new Array(this.canvas.height).fill(type);
         posX++;
       }
