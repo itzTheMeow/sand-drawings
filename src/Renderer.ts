@@ -1,5 +1,4 @@
 import { getMaterial, MaterialTypes } from "./Materials";
-import config from "./config";
 import { hexToRgb } from "./util/HEX2RGB";
 import Game from "./Game";
 
@@ -28,25 +27,12 @@ export default class Renderer {
   }
 
   public update() {
-    let x = 0;
-    let y = 0;
-    while (x < this.game.canvas.width - 1) {
-      y = this.game.canvas.height;
-      while (y >= 0) {
-        let mat = this.game.pixels[x][y];
-        this.renderPixel(x, y, mat);
-
-        /*if (y == 0 || y == game.canvas.height) {
-          if (y == 0) this.remove_obj(x, y);
-          y--;
-          stop();
-          continue;
-        }*/
-
-        y--;
-      }
-      x++;
-    }
+    let t = this;
+    this.game.pixels.forEach((p, x) => {
+      p.forEach((pp, y) => {
+        t.renderPixel(x, y + 1, t.game.getPixel(x, y));
+      });
+    });
     this.finishFrame();
     requestAnimationFrame(this.update.bind(this));
   }

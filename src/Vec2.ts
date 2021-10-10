@@ -24,4 +24,7 @@ export default class Vec2 {
   toString() {
     return `${this.x}, ${this.y}`;
   }
+  toArray() {
+    return [this.x, this.y];
+  }
 }

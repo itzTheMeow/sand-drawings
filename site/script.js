@@ -118,23 +118,22 @@
   };
 
   // src/Materials.ts
-  var Materials = {
-    0: {
-      name: "air",
-      color: "#000000",
-      fallSpeed: 0
-    },
-    1: {
-      name: "sand",
-      color: "#FF0000",
-      fallSpeed: 1
-    }
-  };
   var MaterialTypes;
   (function(MaterialTypes3) {
     MaterialTypes3[MaterialTypes3["air"] = 0] = "air";
     MaterialTypes3[MaterialTypes3["sand"] = 1] = "sand";
   })(MaterialTypes || (MaterialTypes = {}));
+  var Materials = [];
+  Materials[0] = {
+    name: "air",
+    color: "#000000",
+    fallSpeed: 0
+  };
+  Materials[1] = {
+    name: "sand",
+    color: "#FF0000",
+    fallSpeed: 1
+  };
   function getMaterial(id) {
     return Materials[id] || Materials[0];
   }
@@ -162,17 +161,12 @@
       this.game.ctx.putImageData(this.imgData, 0, 0);
     }
     update() {
-      let x = 0;
-      let y = 0;
-      while (x < this.game.canvas.width - 1) {
-        y = this.game.canvas.height;
-        while (y >= 0) {
-          let mat = this.game.pixels[x][y];
-          this.renderPixel(x, y, mat);
-          y--;
-        }
-        x++;
-      }
+      let t = this;
+      this.game.pixels.forEach((p, x) => {
+        p.forEach((pp, y) => {
+          t.renderPixel(x, y + 1, t.game.getPixel(x, y));
+        });
+      });
       this.finishFrame();
       requestAnimationFrame(this.update.bind(this));
     }
@@ -207,6 +201,9 @@
     }
     toString() {
       return `${this.x}, ${this.y}`;
+    }
+    toArray() {
+      return [this.x, this.y];
     }
   };
 
@@ -272,6 +269,44 @@
     }
   };
 
+  // src/util/rand.ts
+  var rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  var rand_default = rand;
+
+  // src/Physics.ts
+  var Physics = class {
+    constructor(game) {
+      this.game = game;
+    }
+    update() {
+      let x = this.game.canvas.width;
+      let y = 0;
+      while (x > 0) {
+        y = 0;
+        while (y < this.game.canvas.height) {
+          let pos = new Vec2(x, y);
+          let mat = this.game.getPixel(...pos.toArray());
+          let materialProps = getMaterial(mat);
+          if (materialProps.fallSpeed) {
+            if (!this.game.getPixel(pos.x, pos.y + 1)) {
+              let newPos = pos.duplicate().add(0, materialProps.fallSpeed);
+              let posDet = rand_default(1, 12);
+              if (posDet < 2) {
+                newPos.sub(1, 0);
+              } else if (posDet > 11) {
+                newPos.add(1, 0);
+              }
+              this.game.setPixel(pos.x, pos.y, MaterialTypes.air);
+              this.game.setPixel(newPos.x, newPos.y, mat);
+            }
+          }
+          y++;
+        }
+        x--;
+      }
+    }
+  };
+
   // src/Game.ts
   var Game = class {
     constructor() {
@@ -284,13 +319,14 @@
       this.fillPixels(MaterialTypes.air);
       this.pen = new Pen(this);
       this.renderer = new Renderer(this);
+      this.phys = new Physics(this);
       this.renderer.startRender();
     }
-    getPixel(pos) {
-      return this.pixels[pos.x][pos.y];
+    getPixel(x, y) {
+      return this.pixels[x][y];
     }
-    setPixel(pos, type) {
-      this.pixels[pos.x][pos.y] = type;
+    setPixel(x, y, type) {
+      this.pixels[x][y] = type;
     }
     fillPixels(type) {
       let posX = 0;
@@ -300,6 +336,7 @@
       }
     }
     tick() {
+      this.phys.update();
       this.pen.update();
     }
   };
