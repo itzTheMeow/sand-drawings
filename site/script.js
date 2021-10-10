@@ -190,19 +190,31 @@
     add(x, y) {
       this.x += x;
       this.y += y;
+      return this;
     }
     sub(x, y) {
       this.x -= x;
       this.y -= y;
+      return this;
     }
     set(x, y) {
       this.x = x;
       this.y = y;
+      return this;
+    }
+    duplicate() {
+      return new Vec2(this.x, this.y);
     }
     toString() {
       return `${this.x}, ${this.y}`;
     }
   };
+
+  // src/util/pointAlongLine.ts
+  function pointAlongLine(point1, point2, percentage) {
+    percentage = percentage / 100;
+    return new Vec2(point1.x * (1 - percentage) + point2.x * percentage, point1.y * (1 - percentage) + point2.y * percentage);
+  }
 
   // src/Pen.ts
   var Pen = class {
@@ -230,13 +242,31 @@
     }
     stopDrawing() {
       this.isDrawing = false;
+      this.lastMousePos = void 0;
     }
     update() {
       if (this.isDrawing) {
-        for (var x = this.mousePos.x; x < this.mousePos.x + this.size; x++) {
-          for (var y = this.mousePos.y; y < this.mousePos.y + this.size; y++) {
-            (this.game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] = this.material;
+        if (this.lastMousePos) {
+          let points = [];
+          let pe = this;
+          for (let i = 1; i <= 100; i++) {
+            points.push(pointAlongLine(pe.lastMousePos, pe.mousePos, i));
           }
+          points = points.map((p) => p.set(Math.round(p.x), Math.round(p.y)));
+          points = [...new Set(points)];
+          points.forEach((point) => {
+            this.draw(point);
+          });
+        } else {
+          this.draw(this.mousePos);
+        }
+        this.lastMousePos = this.mousePos.duplicate();
+      }
+    }
+    draw(pos) {
+      for (let x = pos.x; x < pos.x + this.size; x++) {
+        for (let y = pos.y; y < pos.y + this.size; y++) {
+          (this.game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] = this.material;
         }
       }
     }

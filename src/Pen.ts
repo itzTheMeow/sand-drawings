@@ -1,12 +1,14 @@
 import Game from "./Game";
 import { MaterialTypes } from "./Materials";
 import Vec2 from "./Vec2";
+import pointAlongLine from "./util/pointAlongLine";
 
 export default class Pen {
   public size = 5;
   public material: MaterialTypes = MaterialTypes.sand;
 
   public isDrawing = false;
+  public lastMousePos?: Vec2;
   public mousePos: Vec2 = new Vec2(0, 0);
 
   constructor(public game: Game) {
@@ -29,15 +31,34 @@ export default class Pen {
   }
   public stopDrawing() {
     this.isDrawing = false;
+    this.lastMousePos = undefined;
   }
 
   public update() {
     if (this.isDrawing) {
-      for (var x = this.mousePos.x; x < this.mousePos.x + this.size; x++) {
-        for (var y = this.mousePos.y; y < this.mousePos.y + this.size; y++) {
-          (this.game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] =
-            this.material;
+      if (this.lastMousePos) {
+        let points: Vec2[] = [];
+        let pe = this;
+        for (let i = 1; i <= 100; i++) {
+          points.push(pointAlongLine(pe.lastMousePos, pe.mousePos, i));
         }
+        points = points.map((p) => p.set(Math.round(p.x), Math.round(p.y)));
+        points = [...new Set(points)];
+        points.forEach((point) => {
+          this.draw(point);
+        });
+      } else {
+        this.draw(this.mousePos);
+      }
+      this.lastMousePos = this.mousePos.duplicate();
+    }
+  }
+
+  public draw(pos: Vec2) {
+    for (let x = pos.x; x < pos.x + this.size; x++) {
+      for (let y = pos.y; y < pos.y + this.size; y++) {
+        (this.game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] =
+          this.material;
       }
     }
   }
