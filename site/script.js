@@ -181,57 +181,64 @@
     }
   };
 
+  // src/Vec2.ts
+  var Vec2 = class {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+    add(x, y) {
+      this.x += x;
+      this.y += y;
+    }
+    sub(x, y) {
+      this.x -= x;
+      this.y -= y;
+    }
+    set(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+    toString() {
+      return `${this.x}, ${this.y}`;
+    }
+  };
+
   // src/Pen.ts
   var Pen = class {
     constructor(game) {
       this.game = game;
       this.size = 5;
+      this.material = MaterialTypes.sand;
       this.isDrawing = false;
-      this.mousePos = { x: 0, y: 0 };
-      this.update = function() {
-        if (this.isDrawing) {
-          for (var x = this.mousePos.x; x < this.mousePos.x + this.size; x++) {
-            for (var y = this.mousePos.y; y < this.mousePos.y + this.size; y++) {
-              (this.game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] = 1;
-            }
-          }
-        }
-      };
-      game.canvas.onmousedown = this.startDrawing.bind(this);
-      game.canvas.onmouseup = this.stopDrawing.bind(this);
-      game.canvas.ontouchstart = this.startDrawing.bind(this);
-      game.canvas.ontouchend = this.stopDrawing.bind(this);
-      game.canvas.onmousemove = function(e) {
-        this.mousePos = {
-          x: e.offsetX,
-          y: e.offsetY
-        };
-        this.update();
-      }.bind(this);
-      game.canvas.ontouchmove = function(e) {
-        this.mousePos = {
-          x: e.touches[0].clientX,
-          y: e.touches[0].clientY
-        };
-        this.update();
-      }.bind(this);
+      this.mousePos = new Vec2(0, 0);
+      game.canvas.onmousedown = game.canvas.ontouchstart = this.startDrawing.bind(this);
+      game.canvas.onmousemove = game.canvas.ontouchmove = this.drawAt.bind(this);
+      game.canvas.onmouseup = game.canvas.ontouchend = this.stopDrawing.bind(this);
     }
     startDrawing(e) {
       this.isDrawing = true;
-      if (e.touches)
-        this.mousePos = {
-          x: e.touches[0].clientX,
-          y: e.touches[0].clientY
-        };
-      else
-        this.mousePos = {
-          x: e.offsetX,
-          y: e.offsetY
-        };
+      this.drawAt(e);
+    }
+    drawAt(e) {
+      if (window.TouchEvent && e instanceof TouchEvent) {
+        this.mousePos.set(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+      } else if (e instanceof MouseEvent) {
+        this.mousePos.set(e.offsetX, e.offsetY);
+      }
       this.update();
     }
     stopDrawing() {
       this.isDrawing = false;
+    }
+    update() {
+      if (this.isDrawing) {
+        for (var x = this.mousePos.x; x < this.mousePos.x + this.size; x++) {
+          for (var y = this.mousePos.y; y < this.mousePos.y + this.size; y++) {
+            (this.game.pixels[Math.round(x - this.size / 2)] || {})[Math.round(y - this.size / 2)] = this.material;
+          }
+        }
+      }
     }
   };
 
@@ -249,16 +256,16 @@
       this.renderer = new Renderer(this);
       this.renderer.startRender();
     }
+    getPixel(pos) {
+      return this.pixels[pos.x][pos.y];
+    }
+    setPixel(pos, type) {
+      this.pixels[pos.x][pos.y] = type;
+    }
     fillPixels(type) {
       let posX = 0;
-      let posY = 0;
       while (posX < this.canvas.width + 10) {
-        this.pixels[posX] = new Array(this.canvas.height);
-        posY = 0;
-        while (posY < this.canvas.height + 1) {
-          this.pixels[posX][posY] = type;
-          posY++;
-        }
+        this.pixels[posX] = new Array(this.canvas.height).fill(type);
         posX++;
       }
     }

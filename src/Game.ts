@@ -2,6 +2,7 @@ import Renderer from "./Renderer";
 import Pen from "./Pen";
 import _ from "./util/_";
 import { MaterialTypes } from "./Materials";
+import Vec2 from "./Vec2";
 
 export default class Game {
   public canvas: HTMLCanvasElement;
@@ -25,16 +26,17 @@ export default class Game {
     this.renderer.startRender();
   }
 
+  public getPixel(pos: Vec2) {
+    return this.pixels[pos.x][pos.y];
+  }
+  public setPixel(pos: Vec2, type: MaterialTypes) {
+    this.pixels[pos.x][pos.y] = type;
+  }
+
   public fillPixels(type: MaterialTypes) {
     let posX = 0;
-    let posY = 0;
     while (posX < this.canvas.width + 10) {
-      this.pixels[posX] = new Array(this.canvas.height);
-      posY = 0;
-      while (posY < this.canvas.height + 1) {
-        this.pixels[posX][posY] = type;
-        posY++;
-      }
+      this.pixels[posX] = new Array(this.canvas.height).fill(type);
       posX++;
     }
   }
