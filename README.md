@@ -3,3 +3,5 @@
 A sand game I have been working on for a while. Getting a major rewrite soon.
 
 Rewrite coming now!
+
+## [PLAY HERE](http://themeow.ml/sand-drawings/site/)
