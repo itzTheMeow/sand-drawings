@@ -3,9 +3,11 @@
 }
 
 body {
+  position: relative;
   margin: 0px;
   padding: 0px;
-  position: relative;
+  height: 100vh;
+  width: 100vw;
 }
 
 #canvas {
@@ -18,5 +20,32 @@ body {
 #pen {
   position: absolute;
   pointer-events: none;
+}
+#toolbar {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+}
+#toolbar img {
+  display: block;
+  background-color: #8d8d8d;
+  border: 3px double #cdcaca;
+  width: 58px;
+  height: 58px;
+  padding: 2px;
+  -webkit-user-drag: none;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+#toolbar img:hover {
+  background-color: #7b7b7b;
+  border: 3px double #bcb8b8;
+}
+#toolbar img:active {
+  background-color: #747474;
+  border: 3px double #b4b0b0;
+}
+#toolbar img :last-child {
+  margin-bottom: 0px;
 }
 
