@@ -7,6 +7,7 @@ import _ from "./util/_";
 export default class Pen {
   public size = 5;
   public material: MaterialTypes = MaterialTypes.sand;
+  public selectedMat: MaterialTypes = MaterialTypes.sand;
 
   public isDrawing = false;
   public lastMousePos?: Vec2;

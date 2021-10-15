@@ -229,6 +229,7 @@
       this.game = game;
       this.size = 5;
       this.material = MaterialTypes.sand;
+      this.selectedMat = MaterialTypes.sand;
       this.isDrawing = false;
       this.mousePos = new Vec2(0, 0);
       this.penUpdater = setInterval(this.updatePenElement.bind(this), 1);
@@ -337,6 +338,24 @@
     }
   };
 
+  // src/Toolbar.ts
+  function initToolbar(game) {
+    let tools = [...document.querySelectorAll("#toolbar img")];
+    function resetBar(el) {
+      tools.map((t) => t.classList.remove("selected"));
+      tools[el].classList.add("selected");
+    }
+    tools[0].onclick = function(e) {
+      game.pen.material = game.pen.selectedMat;
+      resetBar(0);
+    };
+    tools[1].onclick = function(e) {
+      game.pen.material = MaterialTypes.air;
+      resetBar(1);
+    };
+    resetBar(0);
+  }
+
   // src/Game.ts
   var Game = class {
     constructor() {
@@ -351,6 +370,7 @@
       this.renderer = new Renderer(this);
       this.phys = new Physics(this);
       this.renderer.startRender();
+      initToolbar(this);
     }
     getPixel(x, y) {
       try {

@@ -39,11 +39,15 @@ body {
 }
 #toolbar img:hover {
   background-color: #7b7b7b;
-  border: 3px double #bcb8b8;
+  border-color: #bcb8b8;
 }
 #toolbar img:active {
   background-color: #747474;
-  border: 3px double #b4b0b0;
+  border-color: #b4b0b0;
+}
+#toolbar img.selected {
+  background-color: silver;
+  border-color: #fffefe;
 }
 #toolbar img :last-child {
   margin-bottom: 0px;

@@ -3,6 +3,7 @@ import Pen from "./Pen";
 import _ from "./util/_";
 import { MaterialTypes } from "./Materials";
 import Physics from "./Physics";
+import { initToolbar } from "./Toolbar";
 
 export default class Game {
   public canvas: HTMLCanvasElement;
@@ -26,6 +27,8 @@ export default class Game {
     this.phys = new Physics(this);
 
     this.renderer.startRender();
+
+    initToolbar(this);
   }
 
   public getPixel(x: number, y: number) {

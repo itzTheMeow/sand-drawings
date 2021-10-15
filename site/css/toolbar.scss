@@ -22,11 +22,15 @@ $tool-size: 58px;
 
     &:hover {
       background-color: color.adjust($tool-color, $lightness: -7%);
-      border: 3px double color.adjust($tool-border, $lightness: -7%);
+      border-color: color.adjust($tool-border, $lightness: -7%);
     }
     &:active {
       background-color: color.adjust($tool-color, $lightness: -10%);
-      border: 3px double color.adjust($tool-border, $lightness: -10%);
+      border-color: color.adjust($tool-border, $lightness: -10%);
+    }
+    &.selected {
+      background-color: color.adjust($tool-color, $lightness: 20%);
+      border-color: color.adjust($tool-border, $lightness: 20%);
     }
 
     :last-child {
