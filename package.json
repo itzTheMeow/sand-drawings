@@ -26,9 +26,11 @@
   },
   "homepage": "https://github.com/itzTheMeow/sand-drawings#readme",
   "dependencies": {
+    "@types/howler": "^2.2.4",
     "body-scroll-lock": "^3.1.5",
     "esbuild": "^0.13.4",
     "express": "^4.17.1",
+    "howler": "^2.2.3",
     "sass": "^1.35.2",
     "webpack": "^5.44.0",
     "webpack-cli": "^4.7.2"

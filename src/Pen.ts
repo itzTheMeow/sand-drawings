@@ -33,6 +33,8 @@ export default class Pen {
   public startDrawing(e: MouseEvent | TouchEvent) {
     this.isDrawing = true;
     this.drawAt(e);
+    let sound = getMaterial(this.material).sound;
+    if (sound) sound.play("draw");
   }
   public drawAt(e: MouseEvent | TouchEvent) {
     if (window.TouchEvent && e instanceof TouchEvent) {
@@ -48,6 +50,8 @@ export default class Pen {
   public stopDrawing() {
     this.isDrawing = false;
     this.lastMousePos = undefined;
+    let sound = getMaterial(this.material).sound;
+    if (sound) sound.stop();
   }
 
   public penUpdater = setInterval(this.updatePenElement.bind(this), 1);
