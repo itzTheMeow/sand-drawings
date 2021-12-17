@@ -25,7 +25,7 @@ export function initToolbar(game: Game) {
       Math.PI * 2
     );
     selctx.closePath();
-    selctx.fillStyle = "#FAFAFA";
+    selctx.fillStyle = config.dotColor;
     selctx.fill();
   });
 

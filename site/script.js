@@ -152,7 +152,7 @@
     background: "#000000",
     foreground: "#FFFFFF",
     dotScale: 0.5,
-    dotColor: "#FAFAFA",
+    dotColor: "#60727b",
     toolSize: 58
   };
   var config_default = config;
@@ -418,7 +418,7 @@
       selctx.beginPath();
       selctx.arc(config_default.toolSize / 2, config_default.toolSize / 2, Math.max(1, s * config_default.dotScale), 0, Math.PI * 2);
       selctx.closePath();
-      selctx.fillStyle = "#FAFAFA";
+      selctx.fillStyle = config_default.dotColor;
       selctx.fill();
     });
     function resetBar(el) {
