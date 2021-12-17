@@ -1,7 +1,7 @@
 @use "sass:color";
 
-$tool-color: #8d8d8d;
-$tool-border: #cdcaca;
+$tool-color: #beb5b5;
+$tool-border: #868686;
 $tool-size: 58px;
 
 #toolbar {
@@ -37,8 +37,8 @@ $tool-size: 58px;
       border-color: color.adjust($tool-border, $lightness: -10%);
     }
     &.selected {
-      background-color: color.adjust($tool-color, $lightness: 20%);
-      border-color: color.adjust($tool-border, $lightness: 20%);
+      background-color: color.adjust($tool-color, $lightness: 15%);
+      border-color: color.adjust($tool-border, $lightness: 15%);
     }
 
     :last-child {
