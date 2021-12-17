@@ -166,11 +166,16 @@
       this.statPad = 12;
       this.frameLatency = 0;
       this.fps = 0;
+      this.initData();
+    }
+    initData() {
+      if (this.tempCan)
+        this.tempCan.remove();
       this.tempCan = document.createElement("canvas");
-      this.tempCan.width = game.canvas.width;
-      this.tempCan.height = game.canvas.height;
+      this.tempCan.width = this.game.canvas.width;
+      this.tempCan.height = this.game.canvas.height;
       this.tempCtx = this.tempCan.getContext("2d");
-      this.imgData = this.tempCtx.createImageData(game.canvas.width, game.canvas.height);
+      this.imgData = this.tempCtx.createImageData(this.game.canvas.width, this.game.canvas.height);
       this.pixData = this.imgData.data;
     }
     initFont() {
@@ -453,6 +458,12 @@
       this.renderer.startRender();
       initToolbar(this);
     }
+    resize() {
+      this.canvas.width = window.innerWidth + 2;
+      this.canvas.height = window.innerHeight;
+      this.fillPixels(MaterialTypes.air);
+      this.renderer.initData();
+    }
     get pixelAmount() {
       return this.pixels.map((p) => p.filter((p2) => p2 != 0).length).reduce((a, b) => a + b);
     }
@@ -468,10 +479,15 @@
       } catch (e) {
       }
     }
-    fillPixels(type) {
+    fillPixels(type, force = false) {
       let posX = 0;
+      this.pixels = this.pixels.slice(0, this.canvas.width);
       while (posX < this.canvas.width) {
-        this.pixels[posX] = new Array(this.canvas.height).fill(type);
+        let arr = new Array(this.canvas.height).fill(type);
+        let px = this.pixels[posX] || [];
+        if (!force && px.length)
+          px.map((p, i) => arr[i] = p);
+        this.pixels[posX] = arr.slice(0, this.canvas.height);
         posX++;
       }
     }

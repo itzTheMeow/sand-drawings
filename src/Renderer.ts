@@ -12,12 +12,17 @@ export default class Renderer {
   public tempCtx: CanvasRenderingContext2D;
 
   constructor(public game: Game) {
+    this.initData();
+  }
+
+  public initData() {
+    if (this.tempCan) this.tempCan.remove();
     this.tempCan = document.createElement("canvas");
-    this.tempCan.width = game.canvas.width;
-    this.tempCan.height = game.canvas.height;
+    this.tempCan.width = this.game.canvas.width;
+    this.tempCan.height = this.game.canvas.height;
     this.tempCtx = this.tempCan.getContext("2d");
 
-    this.imgData = this.tempCtx.createImageData(game.canvas.width, game.canvas.height);
+    this.imgData = this.tempCtx.createImageData(this.game.canvas.width, this.game.canvas.height);
     this.pixData = this.imgData.data;
   }
 
