@@ -152,7 +152,11 @@
   var Renderer = class {
     constructor(game) {
       this.game = game;
-      this.imgData = game.ctx.createImageData(game.canvas.width, game.canvas.height);
+      this.tempCan = document.createElement("canvas");
+      this.tempCan.width = game.canvas.width;
+      this.tempCan.height = game.canvas.height;
+      this.tempCtx = this.tempCan.getContext("2d");
+      this.imgData = this.tempCtx.createImageData(game.canvas.width, game.canvas.height);
       this.pixData = this.imgData.data;
     }
     renderPixel(x, y, type) {
@@ -164,18 +168,20 @@
       this.pixData[i + 3] = 255;
     }
     finishFrame() {
-      let ctx = this.game.ctx;
-      ctx.putImageData(this.imgData, 0, 0);
+      this.tempCtx.putImageData(this.imgData, 0, 0);
+      this.game.ctx.drawImage(this.tempCan, 0, 0);
     }
     update() {
       let t = this;
-      this.game.pixels.forEach((p, x) => {
-        p.forEach((pp, y) => {
-          t.renderPixel(x, y + 1, t.game.getPixel(x, y));
+      setTimeout(function() {
+        t.game.pixels.forEach((p, x) => {
+          p.forEach((pp, y) => {
+            t.renderPixel(x, y + 1, t.game.getPixel(x, y));
+          });
         });
-      });
-      this.finishFrame();
-      requestAnimationFrame(this.update.bind(this));
+        t.finishFrame();
+        requestAnimationFrame(t.update.bind(t));
+      }, 0);
     }
     startRender() {
       requestAnimationFrame(this.update.bind(this));
@@ -363,6 +369,7 @@
       this.ticker = setInterval(this.tick.bind(this), 1);
       this.canvas = __default("canvas");
       this.ctx = this.canvas.getContext("2d");
+      this.ctx.imageSmoothingEnabled = false;
       this.canvas.width = window.innerWidth + 2;
       this.canvas.height = window.innerHeight;
       this.fillPixels(MaterialTypes.air);

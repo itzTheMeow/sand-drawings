@@ -17,6 +17,8 @@ export default class Game {
     this.canvas = _("canvas") as HTMLCanvasElement;
     this.ctx = this.canvas.getContext("2d");
 
+    this.ctx.imageSmoothingEnabled = false;
+
     this.canvas.width = window.innerWidth + 2;
     this.canvas.height = window.innerHeight;
 

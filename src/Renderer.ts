@@ -7,9 +7,16 @@ let renderCache = {};
 export default class Renderer {
   public imgData: ImageData;
   public pixData: Uint8ClampedArray;
+  public tempCan: HTMLCanvasElement;
+  public tempCtx: CanvasRenderingContext2D;
 
   constructor(public game: Game) {
-    this.imgData = game.ctx.createImageData(game.canvas.width, game.canvas.height);
+    this.tempCan = document.createElement("canvas");
+    this.tempCan.width = game.canvas.width;
+    this.tempCan.height = game.canvas.height;
+    this.tempCtx = this.tempCan.getContext("2d");
+
+    this.imgData = this.tempCtx.createImageData(game.canvas.width, game.canvas.height);
     this.pixData = this.imgData.data;
   }
 
@@ -23,19 +30,21 @@ export default class Renderer {
     this.pixData[i + 3] = 255; // alpha
   }
   public finishFrame() {
-    let ctx = this.game.ctx;
-    ctx.putImageData(this.imgData, 0, 0);
+    this.tempCtx.putImageData(this.imgData, 0, 0);
+    this.game.ctx.drawImage(this.tempCan, 0, 0);
   }
 
   public update() {
     let t = this;
-    this.game.pixels.forEach((p, x) => {
-      p.forEach((pp, y) => {
-        t.renderPixel(x, y + 1, t.game.getPixel(x, y));
+    setTimeout(function () {
+      t.game.pixels.forEach((p, x) => {
+        p.forEach((pp, y) => {
+          t.renderPixel(x, y + 1, t.game.getPixel(x, y));
+        });
       });
-    });
-    this.finishFrame();
-    requestAnimationFrame(this.update.bind(this));
+      t.finishFrame();
+      requestAnimationFrame(t.update.bind(t));
+    }, 0);
   }
   public startRender() {
     requestAnimationFrame(this.update.bind(this));
