@@ -1,11 +1,39 @@
+import config from "./config";
 import Game from "./Game";
 import { MaterialTypes } from "./Materials";
+import _ from "./util/_";
 
 export function initToolbar(game: Game) {
   let tools = [...document.querySelectorAll("#toolbar img")] as HTMLImageElement[];
+  let sizes: HTMLCanvasElement[] = [];
+
+  game.pen.sizes.forEach((s, i) => {
+    let selector = document.createElement("canvas");
+    selector.width = selector.height = config.toolSize;
+    _("sizes").appendChild(selector);
+    sizes.push(selector);
+
+    let selctx = selector.getContext("2d");
+    selctx.beginPath();
+    selctx.arc(
+      config.toolSize / 2,
+      config.toolSize / 2,
+      Math.max(1, s * config.dotScale),
+      0,
+      Math.PI * 2
+    );
+    selctx.closePath();
+    selctx.fillStyle = "#FAFAFA";
+    selctx.fill();
+  });
+
   function resetBar(el: number) {
     tools.map((t) => t.classList.remove("selected"));
     tools[el].classList.add("selected");
+  }
+  function resetSizes(el: number) {
+    sizes.map((t) => t.classList.remove("selected"));
+    sizes[el].classList.add("selected");
   }
 
   // Pencil
@@ -19,5 +47,13 @@ export function initToolbar(game: Game) {
     resetBar(1);
   };
 
+  sizes.forEach((s, i) => {
+    s.onclick = function () {
+      game.pen.selsize = i;
+      resetSizes(i);
+    };
+  });
+
   resetBar(0);
+  resetSizes(game.pen.selsize);
 }

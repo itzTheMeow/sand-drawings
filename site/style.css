@@ -22,11 +22,20 @@ body {
   pointer-events: none;
 }
 #toolbar {
-  position: absolute;
   left: 8px;
   bottom: 8px;
 }
-#toolbar img {
+
+#sizes {
+  right: 8px;
+  bottom: 8px;
+}
+
+.bar {
+  position: absolute;
+}
+.bar img,
+.bar canvas {
   display: block;
   background-color: #8d8d8d;
   border: 3px double #cdcaca;
@@ -37,19 +46,23 @@ body {
   margin-bottom: 4px;
   cursor: pointer;
 }
-#toolbar img:hover {
+.bar img:hover,
+.bar canvas:hover {
   background-color: #7b7b7b;
   border-color: #bcb8b8;
 }
-#toolbar img:active {
+.bar img:active,
+.bar canvas:active {
   background-color: #747474;
   border-color: #b4b0b0;
 }
-#toolbar img.selected {
+.bar img.selected,
+.bar canvas.selected {
   background-color: silver;
   border-color: #fffefe;
 }
-#toolbar img :last-child {
+.bar img :last-child,
+.bar canvas :last-child {
   margin-bottom: 0px;
 }
 

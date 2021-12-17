@@ -147,17 +147,51 @@
   // src/util/HEX2RGB.ts
   var hexToRgb = (hex) => hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => "#" + r + r + g + g + b + b).substring(1).match(/.{2}/g).map((x) => parseInt(x, 16));
 
+  // src/config.ts
+  var config = {
+    background: "#000000",
+    foreground: "#FFFFFF",
+    dotScale: 0.5,
+    dotColor: "#FAFAFA",
+    toolSize: 58
+  };
+  var config_default = config;
+
   // src/Renderer.ts
   var renderCache = {};
   var Renderer = class {
     constructor(game) {
       this.game = game;
+      this.statStart = [2, 4];
+      this.statPad = 12;
+      this.frameLatency = 0;
+      this.fps = 0;
       this.tempCan = document.createElement("canvas");
       this.tempCan.width = game.canvas.width;
       this.tempCan.height = game.canvas.height;
       this.tempCtx = this.tempCan.getContext("2d");
       this.imgData = this.tempCtx.createImageData(game.canvas.width, game.canvas.height);
       this.pixData = this.imgData.data;
+    }
+    initFont() {
+      this.game.ctx.font = "Pixeloid 16px";
+      this.game.ctx.fillStyle = config_default.foreground;
+    }
+    addStat(text) {
+      this.statTop += this.statPad;
+      let ctx = this.game.ctx;
+      this.initFont();
+      ctx.textAlign = "left";
+      ctx.fillText(text, this.statStart[1], this.statTop);
+    }
+    startFrame() {
+      this.statTop = this.statStart[0];
+      this.startedFrame = Date.now();
+      this.fps++;
+      setTimeout(() => this.fps--, 1e3);
+      this.pixData.fill(0);
+      this.game.ctx.fillStyle = config_default.background;
+      this.game.ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
     }
     renderPixel(x, y, type) {
       let color = renderCache[type] || (renderCache[type] = hexToRgb(getMaterial(type).color));
@@ -168,15 +202,27 @@
       this.pixData[i + 3] = 255;
     }
     finishFrame() {
+      let ctx = this.game.ctx;
       this.tempCtx.putImageData(this.imgData, 0, 0);
-      this.game.ctx.drawImage(this.tempCan, 0, 0);
+      ctx.drawImage(this.tempCan, 0, 0);
+      this.frameLatency = Date.now() - this.startedFrame;
+      this.addStat(`FPS: ${this.fps}`);
+      this.addStat(`LAT: ${this.frameLatency}ms`);
+      this.addStat(`PXL: ${this.game.pixelAmount.toLocaleString()}`);
+      this.addStat(`SIZ: ${this.game.canvas.width}x${this.game.canvas.height}`);
+      this.initFont();
+      ctx.textAlign = "right";
+      if (this.game.canvas.width > 700)
+        ctx.fillText("Try a smaller screen resolution!", this.game.canvas.width - 6, 12);
     }
     update() {
       let t = this;
       setTimeout(function() {
+        t.startFrame();
         t.game.pixels.forEach((p, x) => {
           p.forEach((pp, y) => {
-            t.renderPixel(x, y + 1, t.game.getPixel(x, y));
+            if (p && pp)
+              t.renderPixel(x, y + 1, t.game.getPixel(x, y));
           });
         });
         t.finishFrame();
@@ -233,7 +279,8 @@
   var Pen = class {
     constructor(game) {
       this.game = game;
-      this.size = 5;
+      this.sizes = [1, 5, 10, 25, 50];
+      this.selsize = 1;
       this.material = MaterialTypes.sand;
       this.selectedMat = MaterialTypes.sand;
       this.isDrawing = false;
@@ -246,6 +293,9 @@
         this.mousePos.set(0, 0);
         this.stopDrawing();
       }.bind(this);
+    }
+    get size() {
+      return this.sizes[this.selsize];
     }
     startDrawing(e) {
       this.isDrawing = true;
@@ -347,9 +397,26 @@
   // src/Toolbar.ts
   function initToolbar(game) {
     let tools = [...document.querySelectorAll("#toolbar img")];
+    let sizes = [];
+    game.pen.sizes.forEach((s, i) => {
+      let selector = document.createElement("canvas");
+      selector.width = selector.height = config_default.toolSize;
+      __default("sizes").appendChild(selector);
+      sizes.push(selector);
+      let selctx = selector.getContext("2d");
+      selctx.beginPath();
+      selctx.arc(config_default.toolSize / 2, config_default.toolSize / 2, Math.max(1, s * config_default.dotScale), 0, Math.PI * 2);
+      selctx.closePath();
+      selctx.fillStyle = "#FAFAFA";
+      selctx.fill();
+    });
     function resetBar(el) {
       tools.map((t) => t.classList.remove("selected"));
       tools[el].classList.add("selected");
+    }
+    function resetSizes(el) {
+      sizes.map((t) => t.classList.remove("selected"));
+      sizes[el].classList.add("selected");
     }
     tools[0].onclick = function(e) {
       game.pen.material = game.pen.selectedMat;
@@ -359,7 +426,14 @@
       game.pen.material = MaterialTypes.air;
       resetBar(1);
     };
+    sizes.forEach((s, i) => {
+      s.onclick = function() {
+        game.pen.selsize = i;
+        resetSizes(i);
+      };
+    });
     resetBar(0);
+    resetSizes(game.pen.selsize);
   }
 
   // src/Game.ts
@@ -378,6 +452,9 @@
       this.phys = new Physics(this);
       this.renderer.startRender();
       initToolbar(this);
+    }
+    get pixelAmount() {
+      return this.pixels.map((p) => p.filter((p2) => p2 != 0).length).reduce((a, b) => a + b);
     }
     getPixel(x, y) {
       try {

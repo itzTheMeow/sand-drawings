@@ -33,6 +33,9 @@ export default class Game {
     initToolbar(this);
   }
 
+  get pixelAmount() {
+    return this.pixels.map((p) => p.filter((p) => p != 0).length).reduce((a, b) => a + b);
+  }
   public getPixel(x: number, y: number) {
     try {
       return this.pixels[x][y];

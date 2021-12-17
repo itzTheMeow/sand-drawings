@@ -5,11 +5,19 @@ $tool-border: #cdcaca;
 $tool-size: 58px;
 
 #toolbar {
-  position: absolute;
   left: 8px;
   bottom: 8px;
+}
+#sizes {
+  right: 8px;
+  bottom: 8px;
+}
 
-  img {
+.bar {
+  position: absolute;
+
+  img,
+  canvas {
     display: block;
     background-color: $tool-color;
     border: 3px double $tool-border;

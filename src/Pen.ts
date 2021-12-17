@@ -5,7 +5,8 @@ import pointAlongLine from "./util/pointAlongLine";
 import _ from "./util/_";
 
 export default class Pen {
-  public size = 5;
+  public sizes = [1, 5, 10, 25, 50];
+  public selsize = 1;
   public material: MaterialTypes = MaterialTypes.sand;
   public selectedMat: MaterialTypes = MaterialTypes.sand;
 
@@ -21,6 +22,10 @@ export default class Pen {
       this.mousePos.set(0, 0);
       this.stopDrawing();
     }.bind(this);
+  }
+
+  get size() {
+    return this.sizes[this.selsize];
   }
 
   public startDrawing(e: MouseEvent | TouchEvent) {
