@@ -31,6 +31,18 @@ export default class Game {
     this.renderer.startRender();
 
     initToolbar(this);
+
+    let oldSize = [window.innerWidth, window.innerHeight];
+    setInterval(
+      function () {
+        let newSize = [window.innerWidth, window.innerHeight];
+        if (oldSize[0] !== newSize[0] || oldSize[1] !== newSize[1]) {
+          oldSize = newSize;
+          this.resize();
+        }
+      }.bind(this),
+      100
+    );
   }
 
   public resize() {
