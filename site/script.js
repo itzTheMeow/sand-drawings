@@ -405,7 +405,9 @@
 
   // src/Toolbar.ts
   function initToolbar(game) {
-    let tools = [...document.querySelectorAll("#toolbar img")];
+    let tools = [
+      ...document.querySelectorAll("#toolbar img")
+    ];
     let sizes = [];
     game.pen.sizes.forEach((s, i) => {
       let selector = document.createElement("canvas");
@@ -434,6 +436,8 @@
     tools[1].onclick = function(e) {
       game.pen.material = MaterialTypes.air;
       resetBar(1);
+    };
+    tools[2].onclick = function(e) {
     };
     sizes.forEach((s, i) => {
       s.onclick = function() {

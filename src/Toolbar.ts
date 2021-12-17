@@ -4,7 +4,9 @@ import { MaterialTypes } from "./Materials";
 import _ from "./util/_";
 
 export function initToolbar(game: Game) {
-  let tools = [...document.querySelectorAll("#toolbar img")] as HTMLImageElement[];
+  let tools = [
+    ...document.querySelectorAll("#toolbar img"),
+  ] as HTMLImageElement[];
   let sizes: HTMLCanvasElement[] = [];
 
   game.pen.sizes.forEach((s, i) => {
@@ -46,6 +48,8 @@ export function initToolbar(game: Game) {
     game.pen.material = MaterialTypes.air;
     resetBar(1);
   };
+  // Settings
+  tools[2].onclick = function (e) {};
 
   sizes.forEach((s, i) => {
     s.onclick = function () {
