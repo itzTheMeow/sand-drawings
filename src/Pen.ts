@@ -15,9 +15,11 @@ export default class Pen {
   public mousePos: Vec2 = new Vec2(0, 0);
 
   constructor(public game: Game) {
-    game.canvas.onmousedown = game.canvas.ontouchstart = this.startDrawing.bind(this);
+    game.canvas.onmousedown = game.canvas.ontouchstart =
+      this.startDrawing.bind(this);
     game.canvas.onmousemove = game.canvas.ontouchmove = this.drawAt.bind(this);
-    game.canvas.onmouseup = game.canvas.ontouchend = this.stopDrawing.bind(this);
+    game.canvas.onmouseup = game.canvas.ontouchend =
+      this.stopDrawing.bind(this);
     game.canvas.onmouseleave = function () {
       this.mousePos.set(0, 0);
       this.stopDrawing();
@@ -34,7 +36,10 @@ export default class Pen {
   }
   public drawAt(e: MouseEvent | TouchEvent) {
     if (window.TouchEvent && e instanceof TouchEvent) {
-      this.mousePos.set(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+      this.mousePos.set(
+        e.changedTouches[0].clientX,
+        e.changedTouches[0].clientY
+      );
     } else if (e instanceof MouseEvent) {
       this.mousePos.set(e.offsetX, e.offsetY);
     }
@@ -81,9 +86,10 @@ export default class Pen {
     let t = this;
     new Array(this.size).fill(0).forEach((_, x) => {
       new Array(this.size).fill(0).forEach((_, y) => {
-        (t.game.pixels[Math.round(pos.x + x - t.size / 2)] || [])[
-          Math.round(pos.y + y - t.size / 2)
-        ] = t.material;
+        let pixs = t.game.pixels[Math.round(pos.x + x - t.size / 2)];
+        let pix = Math.round(pos.y + y - t.size / 2);
+        if (!pixs || pixs[pix] == undefined) return;
+        pixs[pix] = t.material;
       });
     });
   }

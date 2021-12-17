@@ -352,7 +352,11 @@
       let t = this;
       new Array(this.size).fill(0).forEach((_2, x) => {
         new Array(this.size).fill(0).forEach((_3, y) => {
-          (t.game.pixels[Math.round(pos.x + x - t.size / 2)] || [])[Math.round(pos.y + y - t.size / 2)] = t.material;
+          let pixs = t.game.pixels[Math.round(pos.x + x - t.size / 2)];
+          let pix = Math.round(pos.y + y - t.size / 2);
+          if (!pixs || pixs[pix] == void 0)
+            return;
+          pixs[pix] = t.material;
         });
       });
     }
