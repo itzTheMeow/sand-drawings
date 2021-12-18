@@ -2136,6 +2136,8 @@
 
   // src/config.ts
   var config = {
+    productName: "Sand Drawings",
+    version: "0.1.0",
     background: "#000000",
     foreground: "#FFFFFF",
     dotScale: 0.5,
@@ -2150,7 +2152,7 @@
     constructor(game) {
       this.game = game;
       this.statStart = [2, 4];
-      this.statPad = 12;
+      this.statPad = 14;
       this.frameLatency = 0;
       this.fps = 0;
       this.initData();
@@ -2166,7 +2168,7 @@
       this.pixData = this.imgData.data;
     }
     initFont() {
-      this.game.ctx.font = "Pixeloid 16px";
+      this.game.ctx.font = "12px Pixeloid";
       this.game.ctx.fillStyle = config_default.foreground;
     }
     addStat(text) {
@@ -2198,6 +2200,7 @@
       this.tempCtx.putImageData(this.imgData, 0, 0);
       ctx.drawImage(this.tempCan, 0, 0);
       this.frameLatency = Date.now() - this.startedFrame;
+      this.addStat(`${config_default.productName} v${config_default.version}`);
       this.addStat(`FPS: ${this.fps}`);
       this.addStat(`LAT: ${this.frameLatency}ms`);
       this.addStat(`PXL: ${this.game.pixelAmount.toLocaleString()}`);
@@ -2440,6 +2443,12 @@
     });
     resetBar(0);
     resetSizes(game.pen.selsize);
+    window.addEventListener("wheel", (e) => {
+      let down = e.deltaY >= 0;
+      let sz = down ? Math.max(0, game.pen.selsize - 1) : Math.min(game.pen.sizes.length - 1, game.pen.selsize + 1);
+      game.pen.selsize = sz;
+      resetSizes(sz);
+    });
   }
 
   // src/Game.ts

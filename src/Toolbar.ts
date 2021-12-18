@@ -60,4 +60,13 @@ export function initToolbar(game: Game) {
 
   resetBar(0);
   resetSizes(game.pen.selsize);
+
+  window.addEventListener("wheel", (e) => {
+    let down = e.deltaY >= 0;
+    let sz = down
+      ? Math.max(0, game.pen.selsize - 1)
+      : Math.min(game.pen.sizes.length - 1, game.pen.selsize + 1);
+    game.pen.selsize = sz;
+    resetSizes(sz);
+  });
 }

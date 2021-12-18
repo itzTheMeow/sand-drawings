@@ -22,16 +22,19 @@ export default class Renderer {
     this.tempCan.height = this.game.canvas.height;
     this.tempCtx = this.tempCan.getContext("2d");
 
-    this.imgData = this.tempCtx.createImageData(this.game.canvas.width, this.game.canvas.height);
+    this.imgData = this.tempCtx.createImageData(
+      this.game.canvas.width,
+      this.game.canvas.height
+    );
     this.pixData = this.imgData.data;
   }
 
   public initFont() {
-    this.game.ctx.font = "Pixeloid 16px";
+    this.game.ctx.font = "12px Pixeloid";
     this.game.ctx.fillStyle = config.foreground;
   }
   private statStart = [2, 4];
-  private statPad = 12;
+  private statPad = 14;
   private statTop: number;
   public addStat(text: string) {
     this.statTop += this.statPad;
@@ -51,10 +54,17 @@ export default class Renderer {
     setTimeout(() => this.fps--, 1000);
     this.pixData.fill(0);
     this.game.ctx.fillStyle = config.background;
-    this.game.ctx.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.fillRect(
+      0,
+      0,
+      this.game.canvas.width,
+      this.game.canvas.height
+    );
   }
   public renderPixel(x: number, y: number, type: MaterialTypes) {
-    let color = renderCache[type] || (renderCache[type] = hexToRgb(getMaterial(type).color));
+    let color =
+      renderCache[type] ||
+      (renderCache[type] = hexToRgb(getMaterial(type).color));
     let i = (this.imgData.width * (y - 1) + x) * 4;
 
     this.pixData[i] = color[0]; // red
@@ -68,6 +78,7 @@ export default class Renderer {
     ctx.drawImage(this.tempCan, 0, 0);
     this.frameLatency = Date.now() - this.startedFrame;
 
+    this.addStat(`${config.productName} v${config.version}`);
     this.addStat(`FPS: ${this.fps}`);
     this.addStat(`LAT: ${this.frameLatency}ms`);
     this.addStat(`PXL: ${this.game.pixelAmount.toLocaleString()}`);
@@ -75,7 +86,11 @@ export default class Renderer {
     this.initFont();
     ctx.textAlign = "right";
     if (this.game.canvas.width > 700)
-      ctx.fillText("Try a smaller screen resolution!", this.game.canvas.width - 6, 12);
+      ctx.fillText(
+        "Try a smaller screen resolution!",
+        this.game.canvas.width - 6,
+        12
+      );
   }
 
   public update() {
