@@ -2518,6 +2518,9 @@
   // src/script.ts
   window.Engine = new Game();
   disableBodyScroll(__default("scroll-lock"));
+  document.addEventListener("gesturestart", (e) => e.preventDefault());
+  document.addEventListener("gesturechange", (e) => e.preventDefault());
+  document.addEventListener("gestureend", (e) => e.preventDefault());
 })();
 /*!
  *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
