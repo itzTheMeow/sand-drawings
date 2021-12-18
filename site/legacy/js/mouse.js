@@ -7,10 +7,22 @@ function Mouse(canvas) {
   this.tool = SAND;
   this.canvas = canvas;
 
-  this.canvas.addEventListener("mousedown", this.handle_mouse_down.bind(this), false);
-  this.canvas.addEventListener("mouseup", this.handle_mouse_up.bind(this), false);
+  this.canvas.addEventListener(
+    "mousedown",
+    this.handle_mouse_down.bind(this),
+    false
+  );
+  this.canvas.addEventListener(
+    "mouseup",
+    this.handle_mouse_up.bind(this),
+    false
+  );
 
-  this.canvas.addEventListener("mousemove", this.handle_mouse_move.bind(this), false);
+  this.canvas.addEventListener(
+    "mousemove",
+    this.handle_mouse_move.bind(this),
+    false
+  );
 
   this.canvas.addEventListener(
     "contextmenu",

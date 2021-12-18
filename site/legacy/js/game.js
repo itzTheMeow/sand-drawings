@@ -258,22 +258,6 @@ Game.prototype.init = function () {
     };
 
     window.requestAnimationFrame(setupDraw);
-
-    document.getElementById("messages-collapse").onclick = function () {
-      document.getElementById("messages-collapse-top").style.display = "block";
-      document.getElementById("messages").style.display = "none";
-      Game.messagesCollapsed = true;
-    };
-    document.getElementById("messages-collapse-top").onclick = function () {
-      document.getElementById("messages-collapse-top").style.display = "none";
-      document.getElementById("messages").style.display = "block";
-      Game.messagesCollapsed = false;
-    };
-    if (Game.messagesCollapsed) {
-      document.getElementById("messages-collapse-top").style.display = "block";
-      document.getElementById("messages").style.display = "none";
-      Game.messagesCollapsed = true;
-    }
   }
 };
 
@@ -302,8 +286,10 @@ Game.prototype.setup = function () {
     });
     document.getElementById("cursor").style.width = s + "px";
     document.getElementById("cursor").style.height = s + "px";
-    document.getElementById("cursor").style.left = e.clientX - Math.floor(s / 2) + "px";
-    document.getElementById("cursor").style.top = e.clientY - Math.floor(s / 2) + "px";
+    document.getElementById("cursor").style.left =
+      e.clientX - Math.floor(s / 2) + "px";
+    document.getElementById("cursor").style.top =
+      e.clientY - Math.floor(s / 2) + "px";
   });
 };
 
@@ -497,7 +483,10 @@ Game.prototype.update = function () {
 
       var um = this.get_material(this.grid[x][y - 1]);
       if (um !== undefined) {
-        if (typeof um.density !== "undefined" && typeof m.density !== "undefined") {
+        if (
+          typeof um.density !== "undefined" &&
+          typeof m.density !== "undefined"
+        ) {
           if (m.density < um.density) {
             if (Math.random() < 0.7) {
               this.swap(x, y - 1, x, y);
@@ -587,7 +576,7 @@ Game.prototype.draw = function () {
   game.draw2d.text("FPS: " + this.fps, 2, 12, "12px nevis Bold");
   game.draw2d.text(
     this.term + " Build " + this.ver,
-    this.canvas.width - 68, // + == left
+    this.canvas.width - 108, // + == left
     this.canvas.height - 3,
     "12px nevis Bold"
   );
@@ -598,7 +587,7 @@ Game.prototype.draw = function () {
     "12px nevis Bold"
   );
   game.draw2d.text(
-    this.mouse.x + 2 + "px, " + (this.mouse.y + 2) + "px",
+    Math.floor(this.mouse.x + 2) + "px, " + Math.floor(this.mouse.y + 2) + "px",
     3,
     this.canvas.height - 3,
     "12px nevis Bold"
@@ -716,7 +705,8 @@ Game.prototype.add_obj = function (x, y, type) {
   /*if (this.grid[x] && this.grid[y] && this.grid[x][y] === NONE) {
     this.particles++;
   }*/
-  (this.grid[x] || {})[y] = type;
+  if (!this.grid[x]) return;
+  this.grid[x][y] = type;
 };
 
 Game.prototype.remove_obj = function (x, y) {
